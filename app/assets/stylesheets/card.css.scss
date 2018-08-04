@@ -1,0 +1,18 @@
+.card {
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) !important;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) !important;
+    transition: box-shadow 0.3s ease-in-out !important;
+}
+
+.card:hover {
+    -webkit-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3) !important;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3) !important;
+}
+
+.card-container {
+    margin: 0px;
+    margin: 5px;
+    display: block;
+    height: 160px;
+    overflow: auto;
+}

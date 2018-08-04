@@ -1,0 +1,125 @@
+.navbar {
+    display: block;
+    width: 100%;
+    height: 45px;
+    list-style-type: none;
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
+}
+
+.navbar-body {
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.navbar-btn {
+    float: left;
+}
+
+.navbar-btn-r {
+    float: right;
+}
+
+.navbar-btn-note {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar-btn-link {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar-btn-link:hover {
+    background-color: #ddd;
+}
+
+.navbar-btn-link-idle {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 10px;
+    text-decoration: none;
+}
+
+.navbar-img {
+    display: block;
+    text-align: center;
+    padding: 5px 2px 5px 2px;
+    text-decoration: none;
+}
+
+.navbar-dropdown {
+    position: relative;
+    display: inline-block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar-dropdown:hover {
+    background-color: #ddd;
+}
+
+.navbar-dropdown-body {
+    background-color: black;
+    position: absolute;
+    display: block;
+    visibility: hidden; 
+    opacity: 0.0;
+    -webkit-transition: all 500ms ease-in-out;
+    -moz-transition: all 500ms ease-in-out;
+    -ms-transition: all 500ms ease-in-out;
+    -o-transition: all 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
+}
+
+.navbar-dropdown:hover .navbar-dropdown-body {
+    visibility: visible; 
+    opacity: 1.0;
+}
+
+.navbar-dropdown-btn {
+    float: center;
+    width: 100%;
+}
+
+.navbar-btn-dropdown {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 0px 16px;
+    text-decoration: none;
+}
+
+.navbar-btn-link:hover {
+    background-color: #ddd;
+}
+
+.navbar-dropdown-btn-link {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar-dropdown-btn-link:hover {
+    background-color: #ddd;
+}
+
+a:hover {
+	color: #444;
+}
+
+.navbar-body li {
+    display: block;
+	display: inline-block;
+}

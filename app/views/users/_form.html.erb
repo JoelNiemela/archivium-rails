@@ -1,0 +1,20 @@
+<% if @user.errors.any? %>
+	<% @user.errors.full_messages.each do |msg| %>
+		<% alert "danger" do %>
+			<%= msg %>
+		<% end %>
+	<% end %>
+<% end %>
+
+<%= form_for @user do |f| %>
+	<%= f.label :username %> <br>
+	<%= f.text_field :username, :class=>"input" %> <br>
+
+	<%= f.label :email %> <br>
+	<%= f.email_field :email, :class=>"input" %> <br>
+
+	<%= f.label :password %> <br>
+	<%= f.password_field :password, :class=>"input" %> <br>
+	<br>
+	<%= f.submit(@user.new_record? ? "Signup" : "Update account", :class => "btn btn-lg btn-wide btn-primary") %>
+<% end%>

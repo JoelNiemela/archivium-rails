@@ -1,0 +1,13 @@
+<div class="user-grid-container">
+	<h1 align="center">Welcome to <%= @user.username %>'s page</h1>
+	<div align="center"><%= gravatar_for @user, size: 150 %></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<% if logged_in? && current_user == @user then %>
+		<%= link_to "Edit account", edit_user_path(@user), :class=>"btn btn-sm btn-white" %>
+	<% end %>
+	<hr>
+</div>
