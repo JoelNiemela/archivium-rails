@@ -1,4 +1,4 @@
-.btn {
+.select {
     border: 1px solid #c4c4c4; 
     font-size: 13px;
     color: #333;
@@ -14,7 +14,7 @@
     box-sizing: border-box;
 }
 
-.btn:focus {
+.select:focus {
     outline: none; 
     border: 1px solid #7bc1f7;
     &:not(.no-box-shadow) {
@@ -24,206 +24,146 @@
     }
 }
 
-a.btn {
-    text-decoration: none;
-    text-align: center;
-}
-
-a.btn:hover {
-    color: #333;
-}
-
-.btn-xl {
+.select-xl {
     border: 1px solid #c4c4c4; 
     font-size: 15px;
     padding: 12px 12px 12px 12px;
 }
 
-.btn-lg {
+.select-lg {
     border: 1px solid #c4c4c4; 
     font-size: 14px;
     padding: 8px 8px 8px 8px;
 }
 
-.btn-sm {
+.select-sm {
     border: 1px solid #c4c4c4; 
     font-size: 12px;
     padding: 3px 3px 3px 3px;
 }
 
-.btn-xs {
+.select-xs {
     border: 1px solid #c4c4c4; 
     font-size: 11px;
     padding: 2px 2px 2px 2px;
 }
 
-.btn-mini {
+.select-mini {
     border: 1px solid #c4c4c4; 
     font-size: 10px;
     padding: 1px 1px 1px 1px;
 }
 
-.btn-micro {
+.select-micro {
     border: 1px solid #c4c4c4; 
     font-size: 10px;
     padding: 1px 1px 1px 1px;
 }
 
-.btn-round {
+.select-round {
     border-radius: 50px !important;
     background: lightgray;
 }
 
-.btn-fullwidth {
+.select-fullwidth {
     width: 100%;
 }
 
-.btn-quarter {
-    width: 98px;
-    @media only screen and (max-width:500px) {
-         width: 19.6%;
-    }
-}
-
-a.btn-quarter {
-    display: block;
-}
-
-.btn-wide {
+.select-wide {
     width: 400px;
     @media only screen and (max-width:500px) {
          width: 80%;
     }
 }
 
-a.btn-wide {
-    display: block;
-}
-
-.btn-medium {
+.select-medium {
     width: 250px;
     @media only screen and (max-width:500px) {
          width: 50%;
     }
 }
 
-a.btn-medium {
-    display: block;
-}
-
-.btn-narrow {
+.select-narrow {
     width: 100px;
     @media only screen and (max-width:500px) {
          width: 20%;
     }
 }
 
-a.btn-narrow {
-    display: block;
-}
-
-.btn-padding-extra-wide {
+.select-padding-extra-wide {
     padding-right: 100px;
     padding-left: 100px;
 }
 
-.btn-padding-wide {
+.select-padding-wide {
     padding-right: 80px;
     padding-left: 80px;
 }
 
-.btn-padding-narrow {
+.select-padding-narrow {
     padding-right: 25px;
     padding-left: 25px;
 }
 
-.btn-padding-extra-narrow {
+.select-padding-extra-narrow {
     padding-right: 10px;
     padding-left: 10px;
 }
 
-.btn-margin-extra-wide {
+.select-margin-extra-wide {
     margin: 20px;
 }
 
-.btn-margin-wide {
+.select-margin-wide {
     margin: 12px;
 }
 
-.btn-margin-narrow {
+.select-margin-narrow {
     margin: 8px;
 }
 
-.btn-margin-extra-narrow {
+.select-margin-extra-narrow {
     margin: 4px;
 }
 
-.btn-default {
+.select-default {
     color: #333;
     background-color: #fff;
     border-color: #ccc;
 }
 
-a.btn-default:hover {
-    color: #333;
-}
-
-.btn-primary {
+.select-primary {
     color: #fff;
     background-color: #428bca;
     border-color: #357ebd;
 }
 
-a.btn-primary:hover {
-    color: #fff;
-}
-
-.btn-success {
+.select-success {
     color: #fff;
     background-color: #5cb85c;
     border-color: #4cae4c;
 }
 
-a.btn-success:hover {
-    color: #fff;
-}
-
-.btn-info {
+.select-info {
     color: #fff;
     background-color: #5bc0de;
     border-color: #46b8da;
 }
 
-a.btn-info:hover {
-    color: #fff;
-}
-
-.btn-warning {
+.select-warning {
     color: #fff;
     background-color: #f0ad4e;
     border-color: #eea236;
 }
 
-a.btn-warning:hover {
-    color: #fff;
-}
-
-.btn-danger {
+.select-danger {
     color: #fff;
     background-color: #d9534f;
     border-color: #d43f3a;
 }
 
-a.btn-danger:hover {
-    color: #fff;
-}
-
-.btn-white {
+.select-white {
     color: #5e5e5e;
     background-color: #fff;
     border: 1px solid #e5e9ec;
-}
-
-a.btn-white:hover {
-    color: #5e5e5e;
 }

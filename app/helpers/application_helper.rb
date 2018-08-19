@@ -7,7 +7,7 @@ module ApplicationHelper
 	end
     
 	def alert(type, &block)
-		content = capture(&block) + content_tag(:span, content_tag(:p, "×", :class => "alert-text"), :class => "closebtn")
-		concat content_tag(:div,  content, :class => ("alert-box " + type))
+		content = capture(&block) + content_tag(:span, content_tag(:p, "×", :class => "alert-content"), :class => "closebtn")
+		concat content_tag(:div,  content, :class => ("alert " + type))
 	end
 end

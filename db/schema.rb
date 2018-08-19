@@ -10,7 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180804004505) do
+ActiveRecord::Schema.define(version: 20180805013847) do
+
+  create_table "objs", force: :cascade do |t|
+    t.string "name"
+    t.string "obj_type"
+    t.string "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "universe_id"
+  end
+
+  create_table "universes", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_objs", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "obj_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_universes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "universe_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username"

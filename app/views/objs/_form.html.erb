@@ -1,0 +1,125 @@
+<% if @obj.errors.any? %>
+	<% @obj.errors.full_messages.each do |msg| %>
+		<% alert "danger" do %>
+			<%= msg %>
+		<% end %>
+	<% end %>
+<% end %>
+
+<% universes = [] %>
+<% universes_objs = {} %>
+<% Universe.all.each do |universe| %>
+	<% if universe.users.include?(current_user) %>
+		<% universes.push([universe.name, universe.id]) %>
+		<% universe_objs = [] %>
+		<% universe.objs.each do |obj| %>
+			<% universe_objs.push([obj.name, obj.id]) %>
+		<% end %>
+		<% universes_objs[universe.id] = universe_objs %>
+	<% end %>
+<% end %>
+
+<%= form_for @obj do |f| %>
+	<%= f.label :name %> <br>
+	<%= f.text_field :name, :class => "input" %> <br>
+	
+	<%= f.label :obj_type %> <br>
+	<%= f.select :obj_type, ["Charactrer", "Location", "Item"], {}, :class => "select select-wide" %> <br>
+	
+	<%= f.label :universe_id %> <br>
+	<%= f.select :universe_id, options_for_select(universes, universes[0]), {}, :class => "select select-wide", :onchange => "setOptions('new_link_field_obj', getSelectOptions(#{universes_objs.to_json}));" %> <br>
+	
+	<div id="fields_div">
+		<% @obj.data.each.with_index do |data, i| %>
+			<div id="data_feilds[<%= i %>]">
+				<% if data[:type] == "text" then %>
+					<hr class="hr-wide"> <br>
+					<input name="obj[data_feilds_type][]" type="hidden" value="text">
+					<label>Name</label> <br>
+					<input name="obj[data_feilds_name][]" class="input" value="<%= data[:name] %>"> <br>
+					<label>Text</label> <br>
+					<textarea name="obj[data_feilds_value][]" class="textarea"><%= data[:value] %></textarea> <br>
+				<% elsif data[:type] == "link" then %>
+					<hr class="hr-wide"> <br>
+					<input name="obj[data_feilds_type][]" type="hidden" value="link">
+					<label>Name</label> <br>
+					<input name="obj[data_feilds_name][]" class="input" value="<%= data[:name] %>"> <br>
+					<label>Link</label> <br>
+					<select name="obj[data_feilds_value][]" class="select select-wide">
+						<% universes_objs[universes[0][1]].each do |universe_obj| %>
+							<% if universe_obj[1] == data[:value].to_i then %>
+								<option selected value="<%= universe_obj[1] %>"><%= universe_obj[0] %></option>
+							<% else %>
+								<option value="<%= universe_obj[1] %>"><%= universe_obj[0] %></option>
+							<% end %>
+						<% end %>
+					</select> <br>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+	
+	<hr class="hr-wide">
+	
+	<br>
+	<div id="add_field_btn">
+		<%= submit_tag 'Add field', :class => "btn btn-wide", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'add_field_btn']);" %> <br>
+	</div>
+	
+	<div id="new_field_form" style="display: none;">
+		<%= submit_tag 'Add field', :class => "btn btn-wide", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'add_field_btn']);" %> <br>
+		<label>Field type</label> <br>
+		<%= submit_tag 'Text', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "" %>
+		<%= submit_tag 'Link', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'new_field_form']);" %>
+		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'new_field_form']);" %>
+		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'new_field_form']);" %>
+		<br>
+		<label>Name</label> <br>
+		<input class="input" id="new_field_name"> <br>
+		<label>Text</label> <br>
+		<textarea class="textarea" id="new_field_text"></textarea> <br>
+		<%= submit_tag 'Add field', :class => "btn btn-primary btn-quarter", :type => 'button', :onclick => "addTextFieldToForm();" %>
+	</div>
+	<div id="new_link_field_form" style="display: none;">
+		<%= submit_tag 'Add field', :class => "btn btn-wide", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'add_field_btn']);" %> <br>
+		<label>Field type</label> <br>
+		<%= submit_tag 'Text', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'new_link_field_form']);" %>
+		<%= submit_tag 'Link', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "" %>
+		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'new_link_field_form']);" %>
+		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'new_link_field_form']);" %>
+		<br>
+		<label>Name</label> <br>
+		<input class="input" id="new_link_field_name"> <br>
+		<label>Link</label> <br>
+		<select class="select select-wide" id="new_link_field_obj">
+			<% universes_objs[universes[0][1]].each do |universe_obj| %>
+				<option value="<%= universe_obj[1] %>"><%= universe_obj[0] %></option>
+			<% end %>
+		</select> <br>
+		<div style="height: 4px; font-size:4px;">&nbsp;</div>
+		<%= submit_tag 'Add field', :class => "btn btn-primary btn-quarter", :type => 'button', :onclick => "addLinkFieldToForm();" %>
+	</div>
+	<div id="new_other_field_form" style="display: none;">
+		<%= submit_tag 'Add field', :class => "btn btn-wide", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'add_field_btn']);" %> <br>
+		<label>Field type</label> <br>
+		<%= submit_tag 'Text', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'new_other_field_form']);" %>
+		<%= submit_tag 'Link', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'new_other_field_form']);" %>
+		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "" %>
+		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'new_other_field_form']);" %>
+		<br>
+		Other
+	</div>
+	<div id="new_other2_field_form" style="display: none;">
+		<%= submit_tag 'Add field', :class => "btn btn-wide", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'add_field_btn']);" %> <br>
+		<label>Field type</label> <br>
+		<%= submit_tag 'Text', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'new_other2_field_form']);" %>
+		<%= submit_tag 'Link', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'new_other2_field_form']);" %>
+		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'new_other2_field_form']);" %>
+		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "" %>
+		<br>
+		Other2
+	</div>
+	
+	<br>
+	<%= f.submit("Submit", :class => "btn btn-lg btn-wide btn-primary") %>
+<% end%>

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 	
 	get 'signup', to: 'users#new'
 	resources :users, except: [:new]
+	resources :objs
+	resources :universes
 	
 	get 'login', to: 'sessions#new'
 	post 'login', to: 'sessions#create'

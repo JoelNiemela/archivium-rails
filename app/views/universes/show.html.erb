@@ -1,0 +1,22 @@
+<h1 align="center"><%= @universe.name %></h1>
+<br>
+<br>
+<br>
+<br>
+<br>
+<%= link_to "Back to objects index", objs_path, :class=>"btn btn-sm btn-white" %>
+<% if logged_in? && @universe.users.include?(current_user) then %>
+	<%= link_to "Edit object", edit_obj_path(@universe), :class=>"btn btn-sm btn-white" %>
+<% end %>
+<hr>
+<h4>Universe's users</h4>
+<% @universe.users.each do |user| %>
+	<%= user.id %>
+	<%= user.username %>
+	<br>
+<% end %>
+<h4>Universe's objs</h4>
+<% @universe.objs.each do |obj| %>
+	<%= obj.name %>
+	<br>
+<% end %>
