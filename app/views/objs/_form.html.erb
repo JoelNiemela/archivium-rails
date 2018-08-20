@@ -46,11 +46,15 @@
 					<input name="obj[data_feilds_name][]" class="input" value="<%= data[:name] %>"> <br>
 					<label>Link</label> <br>
 					<select name="obj[data_feilds_value][]" class="select select-wide">
-						<% universes_objs[universes[0][1]].each do |universe_obj| %>
-							<% if universe_obj[1] == data[:value].to_i then %>
-								<option selected value="<%= universe_obj[1] %>"><%= universe_obj[0] %></option>
+						<% if universes.length > 0 then %>
+							<% universes_objs[universes[0][1]].each do |universe_obj| %>
+								<% if universe_obj[1] == data[:value].to_i then %>
+									<option selected value="<%= universe_obj[1] %>"><%= universe_obj[0] %></option>
+								<% else %>
+									<option value="<%= universe_obj[1] %>"><%= universe_obj[0] %></option>
+								<% end %>
 							<% else %>
-								<option value="<%= universe_obj[1] %>"><%= universe_obj[0] %></option>
+								<option disabled value="0">Please create a universe before creating objects</option>
 							<% end %>
 						<% end %>
 					</select> <br>
@@ -92,8 +96,12 @@
 		<input class="input" id="new_link_field_name"> <br>
 		<label>Link</label> <br>
 		<select class="select select-wide" id="new_link_field_obj">
-			<% universes_objs[universes[0][1]].each do |universe_obj| %>
-				<option value="<%= universe_obj[1] %>"><%= universe_obj[0] %></option>
+			<% if universes.length > 0 then %>
+				<% universes_objs[universes[0][1]].each do |universe_obj| %>
+					<option value="<%= universe_obj[1] %>"><%= universe_obj[0] %></option>
+				<% end %>
+			<% else %>
+				<option disabled value="0">Please create a universe before creating objects</option>
 			<% end %>
 		</select> <br>
 		<div style="height: 4px; font-size:4px;">&nbsp;</div>
