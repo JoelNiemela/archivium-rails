@@ -33,12 +33,50 @@ class ObjsController < ApplicationController
 		fields_name = params["obj"]["data_feilds_name"]
 		fields_value = params["obj"]["data_feilds_value"]
 		fields_type = params["obj"]["data_feilds_type"]
-		puts fields_name
-		[fields_name, fields_value, fields_type].transpose.each do |name, value, type|
-			if type == "text" then
-				@obj.data.push({:type => "text", :name => name, :value => value})
-			elsif type == "link" then
-				@obj.data.push({:type => "link", :name => name, :value => value})
+		fields_time = params["obj"]["data_feilds_time"]
+		fields_time_start = params["obj"]["data_feilds_time_start"]
+		fields_time_end = params["obj"]["data_feilds_time_end"]
+		puts fields_time, '-----------------'
+		bool_fields_time = []
+		for i in 0..(fields_time.length-1) do
+			if fields_time[i+1] == "on" then
+				next
+			else
+				if fields_time[i] == "on" then
+					bool_fields_time.push(true)
+				else
+					bool_fields_time.push(false)
+				end
+			end
+		end
+		fields_time = bool_fields_time
+		puts fields_time, '-----------------'
+		puts fields_name, '-----------------'
+		puts fields_value, '-----------------'
+		puts fields_type, '-----------------'
+		puts fields_time_start, '-----------------'
+		puts fields_time_end, '-----------------'
+		[fields_name, fields_value, fields_type, fields_time, fields_time_start, fields_time_end].transpose.each do |name, value, type, time, time_start, time_end|
+			if time then
+				if type[0.to_s] == "text" then
+					field = {:type => "text", :name => name[0.to_s], :values => [], :timeframes => true}
+					[value.values, time_start.values, time_end.values].transpose.each do |val, tstart, tend|
+						field[:values].push({:value => val, :start => tstart, :end => tend})
+					end
+					@obj.data.push(field)
+				elsif type[0.to_s] == "link" then
+					field = {:type => "link", :name => name[0.to_s], :values => [], :timeframes => true}
+					[value.values, time_start.values, time_end.values].transpose.each do |val, tstart, tend|
+						field.values.push({:value => val, :start => tstart, :end => tend})
+					end
+					@obj.data.push(field)
+				end
+			else
+				if type[0.to_s] == "text" then
+					@obj.data.push({:type => "text", :name => name[0.to_s], :value => value[0.to_s], :timeframes => false})
+				elsif type[0.to_s] == "link" then
+					@obj.data.push({:type => "link", :name => name[0.to_s], :value => value[0.to_s], :timeframes => false})
+				end
 			end
 		end
 		puts @obj.data, '------------'
@@ -58,7 +96,7 @@ class ObjsController < ApplicationController
 	
 	private
 	def obj_params
-		params.require(:obj).permit(:name, :obj_type, :universe_id)
+		params.require(:obj).permit(:name, :obj_type, :universe_id, :data)
 	end
 	
 	def set_obj
