@@ -74,54 +74,6 @@ a.btn:hover {
     background: lightgray;
 }
 
-.btn-fullwidth {
-    width: 100%;
-}
-
-.btn-quarter {
-    width: 98px;
-    @media only screen and (max-width:500px) {
-         width: 19.6%;
-    }
-}
-
-a.btn-quarter {
-    display: block;
-}
-
-.btn-wide {
-    width: 400px;
-    @media only screen and (max-width:500px) {
-         width: 80%;
-    }
-}
-
-a.btn-wide {
-    display: block;
-}
-
-.btn-medium {
-    width: 250px;
-    @media only screen and (max-width:500px) {
-         width: 50%;
-    }
-}
-
-a.btn-medium {
-    display: block;
-}
-
-.btn-narrow {
-    width: 100px;
-    @media only screen and (max-width:500px) {
-         width: 20%;
-    }
-}
-
-a.btn-narrow {
-    display: block;
-}
-
 .btn-padding-extra-wide {
     padding-right: 100px;
     padding-left: 100px;

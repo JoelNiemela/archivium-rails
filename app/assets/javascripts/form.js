@@ -14,7 +14,7 @@ function addTextFieldToForm() {
 	time.id = "time_frame_span[" + (fields_div.childElementCount) +"]"
 	time.style.cssText = "display: none";
 	var time_start_label = document.createElement("label");
-	time_start_label.innerHTML = "Start: ";
+	time_start_label.innerHTML = "Start:\xa0";
 	var time_start = document.createElement("input");
 	time_start.name = "obj[data_feilds_time_start][][0]"
 	time_start.classList.add("input");
@@ -29,13 +29,13 @@ function addTextFieldToForm() {
 	time_end.type = "number";
 	var type = document.createElement("input");
 	type.value = "text";
-	type.name = "obj[data_feilds_type][][0]";
+	type.name = "obj[data_feilds_type][]";
 	type.type = "hidden";
 	var input_label = document.createElement("label");
 	input_label.innerHTML = "Name";
 	var input = document.createElement("input");
 	input.value = name;
-	input.name = "obj[data_feilds_name][][0]";
+	input.name = "obj[data_feilds_name][]";
 	input.classList.add("input");
 	var textarea_label = document.createElement("label");
 	textarea_label.innerHTML = "Text";
@@ -92,13 +92,13 @@ function addLinkFieldToForm() {
 	hr.classList.add("hr-wide");
 	var type = document.createElement("input");
 	type.value = "link";
-	type.name = "obj[data_feilds_type][][0]"
+	type.name = "obj[data_feilds_type][]"
 	type.type = "hidden";
 	var time = document.createElement("div");
 	time.id = "time_frame_span[" + (fields_div.childElementCount) +"]"
 	time.style.cssText = "display: none";
 	var time_start_label = document.createElement("label");
-	time_start_label.innerHTML = "Start: ";
+	time_start_label.innerHTML = "Start:\xa0";
 	var time_start = document.createElement("input");
 	time_start.name = "obj[data_feilds_time_start][][0]"
 	time_start.classList.add("input");
@@ -115,7 +115,7 @@ function addLinkFieldToForm() {
 	input_label.innerHTML = "Name";
 	var input = document.createElement("input");
 	input.value = name;
-	input.name = "obj[data_feilds_name][][0]"
+	input.name = "obj[data_feilds_name][]"
 	input.classList.add("input");
 	var select_label = document.createElement("label");
 	select_label.innerHTML = "Link";

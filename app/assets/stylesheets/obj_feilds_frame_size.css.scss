@@ -1,0 +1,39 @@
+.feild-frame-container {  
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.feild-frame {
+	flex: 25%;
+	box-sizing: border-box;
+}
+
+@media (min-width: 1500px) {
+	.feild-frame {
+		flex: 20%;
+	}
+}
+
+@media (min-width: 1200px) and (max-width: 1499px) {
+	.feild-frame {
+		flex: 25%;
+	}
+}
+
+@media (min-width: 900px) and (max-width: 1199px) {
+	.feild-frame {
+		flex: 33%;
+	}
+}
+
+@media (min-width: 600px) and (max-width: 899px) {
+	.feild-frame {
+		flex: 50%;
+	}
+}
+
+@media (min-width: 0px) and (max-width: 599px) {
+	.feild-frame {
+		flex: 100%;
+	}
+}

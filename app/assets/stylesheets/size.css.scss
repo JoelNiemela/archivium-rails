@@ -10,6 +10,16 @@
     &.input {min-width: 100%;}
 }
 
+.size-halfwidth {
+    width: 50%;
+    &.input {min-width: 50%;}
+}
+
+.size-quarterwidth {
+    width: 25%;
+    &.input {min-width: 25%;}
+}
+
 .size-extra-wide {
     width: 400px;
     &.input {min-width: 400px;}

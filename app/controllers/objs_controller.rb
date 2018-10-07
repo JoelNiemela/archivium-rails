@@ -58,13 +58,13 @@ class ObjsController < ApplicationController
 		puts fields_time_end, '-----------------'
 		[fields_name, fields_value, fields_type, fields_time, fields_time_start, fields_time_end].transpose.each do |name, value, type, time, time_start, time_end|
 			if time then
-				if type[0.to_s] == "text" then
+				if type == "text" then
 					field = {:type => "text", :name => name[0.to_s], :values => [], :timeframes => true}
 					[value.values, time_start.values, time_end.values].transpose.each do |val, tstart, tend|
 						field[:values].push({:value => val, :start => tstart, :end => tend})
 					end
 					@obj.data.push(field)
-				elsif type[0.to_s] == "link" then
+				elsif type == "link" then
 					field = {:type => "link", :name => name[0.to_s], :values => [], :timeframes => true}
 					[value.values, time_start.values, time_end.values].transpose.each do |val, tstart, tend|
 						field.values.push({:value => val, :start => tstart, :end => tend})
@@ -72,9 +72,9 @@ class ObjsController < ApplicationController
 					@obj.data.push(field)
 				end
 			else
-				if type[0.to_s] == "text" then
+				if type == "text" then
 					@obj.data.push({:type => "text", :name => name[0.to_s], :value => value[0.to_s], :timeframes => false})
-				elsif type[0.to_s] == "link" then
+				elsif type == "link" then
 					@obj.data.push({:type => "link", :name => name[0.to_s], :value => value[0.to_s], :timeframes => false})
 				end
 			end
