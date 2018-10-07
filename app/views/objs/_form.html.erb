@@ -20,7 +20,7 @@
 <% end %>
 
 <%= form_for @obj do |f| %>
-	<div id="fields_div" class="feild-frame-container">
+	<div id="fields_div" class="feild-frame-container well">
 		<div class="feild-frame float-left">
 			<hr class="size-fullwidth"> <br>
 			<%= f.label :name %> <br>
@@ -58,7 +58,7 @@
 									<label>End:&nbsp;&nbsp;&nbsp;</label> <input name="obj[data_feilds_time_end][][<%= time_frame_id %>]" class="input input-sm" type="number" value="<%= value[:end] %>"> <br>
 								</div>
 								<label>Text</label> <br>
-								<textarea name="obj[data_feilds_value][][<%= time_frame_id %>]" class="textarea size-fullwidth"><%= value[:value] %></textarea> <br>
+								<textarea name="obj[data_feilds_value][][<%= time_frame_id %>]" class="textarea textarea-vertical size-fullwidth"><%= value[:value] %></textarea> <br>
 							<% elsif data[:type] == "link" then %>
 								<%= submit_tag 'Previous Timeframe', :class => "btn size-halfwidth float-left", :type => 'button', :onclick => "toggleElementsDisplay(['time_frame[#{i}][#{time_frame_id}]', 'time_frame[#{i}][#{time_frame_id>0 ? time_frame_id-1 : data[:values].length-1}]']);" %> <%= submit_tag 'Next Timeframe', :class => "btn size-halfwidth float-left", :type => 'button', :onclick => "toggleElementsDisplay(['time_frame[#{i}][#{time_frame_id}]', 'time_frame[#{i}][#{time_frame_id<data[:values].length-1 ? time_frame_id+1 : 0}]']);" %> <br>
 								<div id="time_frame_span[<%= i %>][<%= time_frame_id %>]">
@@ -96,9 +96,9 @@
 						</div>
 						<input name="obj[data_feilds_type][]" type="hidden" value="text">
 						<label>Name</label> <br>
-						<input name="obj[data_feilds_name][]" class="input" value="<%= data[:name] %>"> <br>
+						<input name="obj[data_feilds_name][]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
 						<label>Text</label> <br>
-						<textarea name="obj[data_feilds_value][][0]" class="textarea size-fullwidth"><%= data[:value] %></textarea> <br>
+						<textarea name="obj[data_feilds_value][][0]" class="textarea textarea-vertical size-fullwidth"><%= data[:value] %></textarea> <br>
 						<label>Enable time frames</label> <br>
 						<%= hidden_field_tag "obj[data_feilds_time][]", "off" %>
 						<%= check_box_tag "obj[data_feilds_time][]", "on", data[:timeframes], :onclick => "toggleElementDisplay('time_frame_span[#{i}]');" %>
@@ -110,7 +110,7 @@
 						</div>
 						<input name="obj[data_feilds_type][]" type="hidden" value="link">
 						<label>Name</label> <br>
-						<input name="obj[data_feilds_name][]" class="input" value="<%= data[:name] %>"> <br>
+						<input name="obj[data_feilds_name][]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
 						<label>Link</label> <br>
 						<select name="obj[data_feilds_value][][0]" class="select size-fullwidth">
 							<% if universes.length > 0 then %>
@@ -141,34 +141,34 @@
 	<hr class="size-fullwidth">
 	
 	<br>
-	<div id="add_field_btn">
+	<div id="add_field_btn" class="form-buttons">
 		<%= submit_tag 'Add field', :class => "btn size-fullwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'add_field_btn']);" %> <br>
 	</div>
 	
-	<div id="new_field_form" style="display: none;">
+	<div id="new_field_form" class="form-buttons" style="display: none;">
 		<%= submit_tag 'Add field', :class => "btn size-fullwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'add_field_btn']);" %> <br>
 		<label>Field type</label> <br>
-		<%= submit_tag 'Text', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "" %>
-		<%= submit_tag 'Link', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'new_field_form']);" %>
-		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'new_field_form']);" %>
-		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'new_field_form']);" %>
+		<%= submit_tag 'Text', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "" %><!--
+ --><%= submit_tag 'Link', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'new_field_form']);" %><!--
+ --><%= submit_tag 'Other', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'new_field_form']);" %><!--
+ --><%= submit_tag 'Other', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'new_field_form']);" %>
 		<br>
 		<label>Name</label> <br>
-		<input class="input" id="new_field_name"> <br>
+		<input class="input size-fullwidth" id="new_field_name"> <br>
 		<label>Text</label> <br>
-		<textarea class="textarea size-fullwidth" id="new_field_text"></textarea> <br>
-		<%= submit_tag 'Add field', :class => "btn btn-primary btn-quarter", :type => 'button', :onclick => "addTextFieldToForm();" %>
+		<textarea class="textarea textarea-vertical size-fullwidth" id="new_field_text"></textarea> <br>
+		<%= submit_tag 'Add field', :class => "btn btn-primary size-halfwidth", :type => 'button', :onclick => "addTextFieldToForm();" %>
 	</div>
-	<div id="new_link_field_form" style="display: none;">
+	<div id="new_link_field_form" class="form-buttons" style="display: none;">
 		<%= submit_tag 'Add field', :class => "btn size-fullwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'add_field_btn']);" %> <br>
 		<label>Field type</label> <br>
-		<%= submit_tag 'Text', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'new_link_field_form']);" %>
-		<%= submit_tag 'Link', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "" %>
-		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'new_link_field_form']);" %>
-		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'new_link_field_form']);" %>
+		<%= submit_tag 'Text', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'new_link_field_form']);" %><!--
+ --><%= submit_tag 'Link', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "" %><!--
+ --><%= submit_tag 'Other', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'new_link_field_form']);" %><!--
+ --><%= submit_tag 'Other', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'new_link_field_form']);" %>
 		<br>
 		<label>Name</label> <br>
-		<input class="input" id="new_link_field_name"> <br>
+		<input class="input size-fullwidth" id="new_link_field_name"> <br>
 		<label>Link</label> <br>
 		<select class="select size-fullwidth" id="new_link_field_obj">
 			<% if universes.length > 0 then %>
@@ -180,29 +180,29 @@
 			<% end %>
 		</select> <br>
 		<div style="height: 4px; font-size:4px;">&nbsp;</div>
-		<%= submit_tag 'Add field', :class => "btn btn-primary btn-quarter", :type => 'button', :onclick => "addLinkFieldToForm();" %>
+		<%= submit_tag 'Add field', :class => "btn btn-primary size-halfwidth", :type => 'button', :onclick => "addLinkFieldToForm();" %>
 	</div>
-	<div id="new_other_field_form" style="display: none;">
+	<div id="new_other_field_form" class="form-buttons" style="display: none;">
 		<%= submit_tag 'Add field', :class => "btn size-fullwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'add_field_btn']);" %> <br>
 		<label>Field type</label> <br>
-		<%= submit_tag 'Text', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'new_other_field_form']);" %>
-		<%= submit_tag 'Link', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'new_other_field_form']);" %>
-		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "" %>
-		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'new_other_field_form']);" %>
+		<%= submit_tag 'Text', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'new_other_field_form']);" %><!--
+ --><%= submit_tag 'Link', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'new_other_field_form']);" %><!--
+ --><%= submit_tag 'Other', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "" %><!--
+ --><%= submit_tag 'Other', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'new_other_field_form']);" %>
 		<br>
 		Other
 	</div>
-	<div id="new_other2_field_form" style="display: none;">
+	<div id="new_other2_field_form" class="form-buttons" style="display: none;">
 		<%= submit_tag 'Add field', :class => "btn size-fullwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_other2_field_form', 'add_field_btn']);" %> <br>
 		<label>Field type</label> <br>
-		<%= submit_tag 'Text', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'new_other2_field_form']);" %>
-		<%= submit_tag 'Link', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'new_other2_field_form']);" %>
-		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'new_other2_field_form']);" %>
-		<%= submit_tag 'Other', :class => "btn btn-sm btn-quarter", :type => 'button', :onclick => "" %>
+		<%= submit_tag 'Text', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_field_form', 'new_other2_field_form']);" %><!--
+ --><%= submit_tag 'Link', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'new_other2_field_form']);" %><!--
+ --><%= submit_tag 'Other', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'new_other2_field_form']);" %><!--
+ --><%= submit_tag 'Other', :class => "btn btn-sm size-quarterwidth", :type => 'button', :onclick => "" %>
 		<br>
 		Other2
 	</div>
 	
-	<br>
-	<%= f.submit("Submit", :class => "btn btn-lg size-fullwidth btn-primary") %>
+	<hr>
+	<%= f.submit("Submit", :class => "btn btn-lg size-fullwidth btn-primary form-buttons") %>
 <% end%>

@@ -41,3 +41,11 @@
     -moz-box-shadow: 0px 0px 8px lightgray; 
     -webkit-box-shadow: 0px 0px 8px lightgray; 
 }
+
+.textarea-vertical {
+    resize: vertical;
+}
+
+.textarea-horizontal {
+    resize: horizontal;
+}
