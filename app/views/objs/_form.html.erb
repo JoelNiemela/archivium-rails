@@ -109,12 +109,12 @@
 					<div id="time_frames[<%= i %>]">
 						<div id="time_frame[<%= i %>][0]" style="display: block">
 							<div id="time_frame_span[<%= i %>][0]" style="display: none">
-								<%= submit_tag 'Previous Timeframe', :class => "btn size-halfwidth float-left", :type => 'button', :onclick => "previousTimeFrame(#{i}, 0);" %> <%= submit_tag 'Next Timeframe', :class => "btn size-halfwidth float-left", :type => 'button', :onclick => "nextTimeFrame(#{i}, 0);" %> <br>
-								<%= submit_tag 'Add Timeframe', :class => "btn size-fullwidth float-left", :type => 'button', :onclick => "addTimeFrame(#{i}, 0, '#{data[:type]}');" %> <br>
+								<%= submit_tag 'Previous Timeframe', :class => "btn size-halfwidth float-left", :id => "previous_time_frame_button[#{i}][0]", :type => 'button', :onclick => "previousTimeFrame(#{i}, 0);" %> <%= submit_tag 'Next Timeframe', :class => "btn size-halfwidth float-left", :type => 'button', :id => "next_time_frame_button[#{i}][0]", :onclick => "nextTimeFrame(#{i}, 0);" %> <br>
+								<%= submit_tag 'Add Timeframe', :class => "btn size-fullwidth float-left", :id => "add_time_frame_button[#{i}][0]", :type => 'button', :onclick => "addTimeFrame(#{i}, 0, '#{data[:type]}');" %> <br>
 								<span id="time_frame_number[<%= i %>][0]">Timeframe 1:</span><br>
 								<div class="group-micro">
-									<label>Start:&nbsp;</label> <input name="obj[data_feilds_time_start][][0]" class="input input-sm" type="number"> <br>
-									<label>End:&nbsp;&nbsp;&nbsp;</label> <input name="obj[data_feilds_time_end][][0]" class="input input-sm" type="number"> <br>
+									<label>Start:&nbsp;</label> <input id="time_frame_start[<%= i %>][0]" name="obj[data_feilds_time_start][][0]" class="input input-sm" type="number"> <br>
+									<label>End:&nbsp;&nbsp;&nbsp;</label> <input id="time_frame_end[<%= i %>][0]" name="obj[data_feilds_time_end][][0]" class="input input-sm" type="number"> <br>
 									<%= submit_tag "🠰 Move frame", :class => "btn btn-xs color-white", :id => "move_left_time_frame_button[#{i}][0]", :type => "button", :onclick => "moveTimeFrameLeft(#{i}, 0)" %>
 									<%= submit_tag "Delete frame", :class => "btn btn-xs color-danger", :id => "delete_time_frame_button[#{i}][0]", :type => "button", :onclick => "deleteTimeFrame(#{i}, 0)" %>
 									<%= submit_tag "Move frame 🠲", :class => "btn btn-xs color-white", :id => "move_right_time_frame_button[#{i}][0]", :type => "button", :onclick => "moveTimeFrameRight(#{i}, 0)" %>
