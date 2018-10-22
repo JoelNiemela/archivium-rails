@@ -122,10 +122,10 @@
 							</div>
 							<% if data[:type] == "text" then %>
 								<label>Text</label> <br>
-								<textarea name="obj[data_feilds_value][][0]" class="textarea textarea-vertical size-fullwidth"><%= data[:value] %></textarea> <br>
+								<textarea id="time_frame_value[<%= i %>][0]"  name="obj[data_feilds_value][][0]" class="textarea textarea-vertical size-fullwidth"><%= data[:value] %></textarea> <br>
 							<% elsif data[:type] == "link" then %>
 								<label>Link</label> <br>
-								<select name="obj[data_feilds_value][][0]" class="select size-fullwidth">
+								<select id="time_frame_value[<%= i %>][0]"  name="obj[data_feilds_value][][0]" class="select size-fullwidth">
 									<% if universes.length > 0 then %>
 										<% universes_objs[(@obj.universe ? @obj.universe.id : universes[0][1])].each do |universe_obj| %>
 											<% if universe_obj[1] == data[:value].to_i then %>
@@ -144,7 +144,7 @@
 					<div id="data_footer_span[<%= i %>]">
 						<label>Enable time frames</label> <br>
 						<%= hidden_field_tag "obj[data_feilds_time][]", "off" %>
-						<%= check_box_tag "obj[data_feilds_time][]", "on", data[:timeframes], :onclick => "toggleTimeFrames(#{i}, this.checked);" %>
+						<%= check_box_tag "obj[data_feilds_time][]", "on", data[:timeframes], :id => "toggle_time_frames_checkbox[#{i}]", :onclick => "toggleTimeFrames(#{i}, this.checked);" %>
 						<br>
 						<%= submit_tag "🠰 Move feild", :class => "btn btn-sm color-white", :id => "move_left_data_feild_button[#{i}]", :type => "button", :onclick => "moveFeildLeft(#{i})" %>
 						<%= submit_tag "Delete feild", :class => "btn btn-sm color-danger", :id => "delete_data_feild_button[#{i}]", :type => "button", :onclick => "deleteFeild(#{i})" %>
