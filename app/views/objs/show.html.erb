@@ -1,10 +1,56 @@
 <h1 align="center"><%= @obj.name %></h1>
 <p align="center"><%= @obj.universe.name %></p>
 <p align="center"><%= @obj.data %></p>
-<br>
-<br>
-<br>
-<br>
+<hr>
+<label>Specify time <small>(empty = no limit)</small>:</label> <input type="number" class="input" oninput="updateTimeSpans(this.value);">
+<div class="feild-frame-container well" id="feilds">
+	<% @obj.data.each_with_index do |feild, feild_id| %>
+		<div class="feild-frame float-left island" id="feild-<%= feild_id %>">
+			<% if feild[:timeframes] %>
+				<% if feild[:type] == "text" %>
+					<%= feild[:name] %>:
+					<hr>
+					<div id="feild-<%= feild_id %>-values">
+						<% feild[:values].each_with_index do |value, value_id| %>
+							<div id="feild-<%= feild_id %>-value-<%= value_id %>">
+								<%= value[:start].to_i %>&mdash;<%= value[:end].to_i %>: <%= value[:value] %><br>
+								<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-value" value="<%= value[:value] %>">
+								<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-start" value="<%= value[:start].to_i %>">
+								<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-end" value="<%= value[:end].to_i %>">
+							</div>
+						<% end %>
+					</div>
+				<% elsif feild[:type] == "link" %>
+					<%= feild[:name] %>:
+					<hr>
+					<div id="feild-<%= feild_id %>-values">
+						<% feild[:values].each_with_index do |value, value_id| %>
+							<div id="feild-<%= feild_id %>-value-<%= value_id %>">
+								<%= value[:start].to_i %>&mdash;<%= value[:end].to_i %>: <%= link_to Obj.find(value[:value]).name, obj_path(value[:value]), :class => "link" %><br>
+								<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-value" value="<%= value[:value] %>">
+								<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-start" value="<%= value[:start].to_i %>">
+								<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-end" value="<%= value[:end].to_i %>">
+							</div>
+						<% end %>
+					</div>
+				<% end %>
+			<% else %>
+				<% if feild[:type] == "text" %>
+					<%= feild[:name] %>:
+					<hr>
+					<%= feild[:value] %><br>
+				<% elsif feild[:type] == "link" %>
+					<%= feild[:name] %>:
+					<hr>
+				<% end %>
+			<% end %>
+		</div>
+	<% end %>
+	<div class="feild-frame float-left"></div>
+	<div class="feild-frame float-left"></div>
+	<div class="feild-frame float-left"></div>
+	<div class="feild-frame float-left"></div>
+</div>
 <br>
 <%= link_to "Back to objects index", objs_path, :class=>"btn btn-sm btn-white" %>
 <% if logged_in? && @obj.users.include?(current_user) then %>

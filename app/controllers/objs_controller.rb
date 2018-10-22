@@ -30,12 +30,12 @@ class ObjsController < ApplicationController
 	
 	def update
 		@obj.data = []
-		fields_name = params["obj"]["data_feilds_name"]
-		fields_value = params["obj"]["data_feilds_value"]
-		fields_type = params["obj"]["data_feilds_type"]
-		fields_time = params["obj"]["data_feilds_time"]
-		fields_time_start = params["obj"]["data_feilds_time_start"]
-		fields_time_end = params["obj"]["data_feilds_time_end"]
+		fields_name = params["obj"]["data_feilds_name"] || []
+		fields_value = params["obj"]["data_feilds_value"] || []
+		fields_type = params["obj"]["data_feilds_type"] || []
+		fields_time = params["obj"]["data_feilds_time"] || []
+		fields_time_start = params["obj"]["data_feilds_time_start"] || []
+		fields_time_end = params["obj"]["data_feilds_time_end"] || []
 		puts fields_time, '-----------------'
 		bool_fields_time = []
 		for i in 0..(fields_time.length-1) do
