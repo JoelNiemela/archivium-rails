@@ -748,13 +748,13 @@ function updateTimeSpans(time) {
     for (var i = 0; i < feilds.children.length-4; i++) {
         var values = document.getElementById("feild-" + i + "-values");
         if (values == null) {
-                continue;
-            }
+            continue;
+        }
         for (var j = 0; j < values.children.length; j++) {
             var value_div = document.getElementById("feild-" + i + "-value-" + j);
-            var value = document.getElementById("feild-" + i + "-value-" + j + "-value").value;
-            var start = document.getElementById("feild-" + i + "-value-" + j + "-start").value;
-            var end = document.getElementById("feild-" + i + "-value-" + j + "-end").value;
+            var value = parseInt(document.getElementById("feild-" + i + "-value-" + j + "-value").value);
+            var start = parseInt(document.getElementById("feild-" + i + "-value-" + j + "-start").value);
+            var end = parseInt(document.getElementById("feild-" + i + "-value-" + j + "-end").value);
             if ((time >= start && time <= end) || time == "") {
                 value_div.style.display = "block";
             } else {
