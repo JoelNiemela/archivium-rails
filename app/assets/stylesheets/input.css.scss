@@ -20,27 +20,6 @@
     -webkit-box-shadow: 0px 0px 8px #7bc1f7; 
 }
 
-.input-primary {
-    height: 30px;
-    width: 400px;
-    min-width: 400px;
-    @media only screen and (max-width:500px) {
-         width: 80%;
-         min-width: 80%;
-    }
-    font-size: 13px;
-    padding: 4px 4px 4px 4px;
-}
-
-.input-primary:focus {
-    width: 500px;
-    min-width: 500px;
-    @media only screen and (max-width:500px) {
-         width: 100%;
-         min-width: 100%;
-    }
-}
-
 .input-xl {
     height: 30px;
     font-size: 13px;
@@ -62,5 +41,17 @@
 .input-xs {
     height: 15px;
     font-size: 13px;
+    padding: 4px 4px 4px 4px;
+}
+
+.select-mini {
+    height: 14px;
+    font-size: 12px;
+    padding: 4px 4px 4px 4px;
+}
+
+.select-micro {
+    height: 12px;
+    font-size: 10px;
     padding: 4px 4px 4px 4px;
 }

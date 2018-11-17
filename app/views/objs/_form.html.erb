@@ -179,7 +179,7 @@
 		<input class="input size-fullwidth" id="new_field_name"> <br>
 		<label>Text</label> <br>
 		<textarea class="textarea textarea-vertical size-fullwidth" id="new_field_text"></textarea> <br>
-		<%= submit_tag 'Add field', :class => "btn btn-primary size-halfwidth", :type => 'button', :onclick => "addFieldToForm('text');" %>
+		<%= submit_tag 'Add field', :class => "btn color-primary size-halfwidth", :type => 'button', :onclick => "addFieldToForm('text');" %>
 	</div>
 	<div id="new_link_field_form" class="form-buttons" style="display: none;">
 		<%= submit_tag 'Add field', :class => "btn size-fullwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_link_field_form', 'add_field_btn']);" %> <br>
@@ -202,7 +202,7 @@
 			<% end %>
 		</select> <br>
 		<div style="height: 4px; font-size:4px;">&nbsp;</div>
-		<%= submit_tag 'Add field', :class => "btn btn-primary size-halfwidth", :type => 'button', :onclick => "addFieldToForm('link');" %>
+		<%= submit_tag 'Add field', :class => "btn color-primary size-halfwidth", :type => 'button', :onclick => "addFieldToForm('link');" %>
 	</div>
 	<div id="new_other_field_form" class="form-buttons" style="display: none;">
 		<%= submit_tag 'Add field', :class => "btn size-fullwidth", :type => 'button', :onclick => "toggleElementsDisplay(['new_other_field_form', 'add_field_btn']);" %> <br>
@@ -224,7 +224,6 @@
 		<br>
 		Other2
 	</div>
-	
 	<hr>
-	<%= f.submit("Submit", :class => "btn btn-lg size-fullwidth btn-primary form-buttons") %>
+	<%= f.submit("Submit", :class => "btn btn-lg size-fullwidth color-primary form-buttons") %>
 <% end%>

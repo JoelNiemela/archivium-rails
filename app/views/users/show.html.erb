@@ -6,7 +6,7 @@
 <br>
 <br>
 <% if logged_in? && current_user == @user then %>
-	<%= link_to "Edit account", edit_user_path(@user), :class=>"btn btn-sm btn-white" %>
+	<%= link_to "Edit account", edit_user_path(@user), :class=>"btn btn-sm color-white" %>
 <% end %>
 <hr>
 <h4><%= @user.username %>'s objs</h4>

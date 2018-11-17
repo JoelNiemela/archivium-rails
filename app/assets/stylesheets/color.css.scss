@@ -1,34 +1,34 @@
-.color-primary {
+.color-primary, .color-primary:hover {
     color: #fff;
     background-color: #428bca;
     border-color: #357ebd;
 }
 
-.color-success {
+.color-success, .color-success:hover {
     color: #fff;
     background-color: #5cb85c;
     border-color: #4cae4c;
 }
 
-.color-info {
+.color-info, .color-info:hover {
     color: #fff;
     background-color: #5bc0de;
     border-color: #46b8da;
 }
 
-.color-warning {
+.color-warning, .color-warning:hover {
     color: #fff;
     background-color: #f0ad4e;
     border-color: #eea236;
 }
 
-.color-danger {
+.color-danger, .color-danger:hover {
     color: #fff;
     background-color: #d9534f;
     border-color: #d43f3a;
 }
 
-.color-white {
+.color-white, .color-white:hover {
     color: #5e5e5e;
     background-color: #fff;
     border: 1px solid #e5e9ec;

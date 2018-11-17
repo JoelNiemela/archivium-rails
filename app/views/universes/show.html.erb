@@ -4,9 +4,9 @@
 <br>
 <br>
 <br>
-<%= link_to "Back to objects index", objs_path, :class=>"btn btn-sm btn-white" %>
+<%= link_to "Back to objects index", universes_path, :class=>"btn btn-sm color-white" %>
 <% if logged_in? && @universe.users.include?(current_user) then %>
-	<%= link_to "Edit object", edit_obj_path(@universe), :class=>"btn btn-sm btn-white" %>
+	<%= link_to "Edit object", edit_universe_path(@universe), :class=>"btn btn-sm color-white" %>
 <% end %>
 <hr>
 <h4>Universe's users</h4>

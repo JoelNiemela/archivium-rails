@@ -3,14 +3,14 @@
 	<%= universe.id %>
 	<%= universe.name %>
 	<% if universe.users.include?(current_user) then %>
-		<%= link_to "View", universe_path(universe), :class=>"btn btn-xs btn-success" %>
-		<%= link_to "Edit", edit_universe_path(universe), :class=>"btn btn-xs btn-primary" %>
-		<%= link_to "Delete", universe_path(universe), method: :delete, data: {confirm: "Are you sure you want to delete this universe?"}, :class=>"btn btn-xs btn-danger" %>
+		<%= link_to "View", universe_path(universe), :class=>"btn btn-xs color-success" %>
+		<%= link_to "Edit", edit_universe_path(universe), :class=>"btn btn-xs color-primary" %>
+		<%= link_to "Delete", universe_path(universe), method: :delete, data: {confirm: "Are you sure you want to delete this universe?"}, :class=>"btn btn-xs color-danger" %>
 	<% end %>
 	<br>
 	<br>
 <% end %>
 <hr>
 <% if logged_in? then %>
-	<%= link_to "New universe", new_universe_path, :class=>"btn btn-sm btn-white" %>
+	<%= link_to "New universe", new_universe_path, :class=>"btn btn-sm color-white" %>
 <% end %>

@@ -8,26 +8,6 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 }
 
-.well-mini {
-    padding: 5px;
-    margin-bottom: 5px;
-    background-color: #f5f5f5;
-    border: 1px solid #e3e3e3;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-}
-
-.well-micro {
-    padding: 2px;
-    margin-bottom: 2px;
-    background-color: #f5f5f5;
-    border: 1px solid #e3e3e3;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-}
-
 .group {
     padding: 19px;
     margin: 2px;
@@ -39,27 +19,16 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 }
 
-.group-mini {
-    padding: 5px;
-    margin-bottom: 5px;
-    background-color: white;
+.island {
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #fff;
     border: 1px solid #e3e3e3;
     border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-sizing: border-box;
 }
 
-.group-micro {
-    padding: 2px;
-    margin-bottom: 2px;
-    background-color: white;
-    border: 1px solid #e3e3e3;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-}
-
-.span-group {
+.span-well, .span-group, .span-island {
     height: 35px;
     font-size: 14px;
     padding: 4px 15px 4px 15px;
@@ -70,12 +39,4 @@
     -moz-box-shadow: 0px 0px 4px #d9d9d9;
     -webkit-box-shadow: 0px 0px 4px #d9d9d9;
     box-sizing: border-box;
-}
-
-.island {
-    padding: 19px;
-    margin-bottom: 20px;
-    background-color: #fff;
-    border: 1px solid #e3e3e3;
-    border-radius: 4px;
 }

@@ -248,7 +248,7 @@ function addLinkFieldToForm() {
 function addFieldToForm(type) {
     var fields_div = document.getElementById("fields_div");
     
-    var dataFeildId = (fields_div.childElementCount)-1;
+    var dataFeildId = (fields_div.childElementCount)-5;
     
     var data_feild = document.createElement("div");
     data_feild.id = "data_feilds[" + (dataFeildId) + "]";
@@ -271,6 +271,11 @@ function addFieldToForm(type) {
     
     var data_feild_name = document.createElement("input");
     data_feild_name.name = "obj[data_feilds_name][]";
+    if (type == "text") {
+        data_feild_name.value = document.getElementById("new_field_name").value;
+    } else if (type == "link") {
+        data_feild_name.value = document.getElementById("new_link_field_name").value;   
+    }
     data_feild_name.classList.add("input");
     data_feild_name.classList.add("size-fullwidth");
     
@@ -286,6 +291,7 @@ function addFieldToForm(type) {
     
     var previous_time_frame_button = document.createElement("input");
     previous_time_frame_button.type = "button";
+    previous_time_frame_button.id = "previous_time_frame_button[" + dataFeildId + "][0]";
     previous_time_frame_button.name = "commit";
     previous_time_frame_button.value = "Previous Timeframe";
     previous_time_frame_button.classList.add("btn");
@@ -295,6 +301,7 @@ function addFieldToForm(type) {
     
     var next_time_frame_button = document.createElement("input");
     next_time_frame_button.type = "button";
+    next_time_frame_button.id = "next_time_frame_button[" + dataFeildId + "][0]";
     next_time_frame_button.name = "commit";
     next_time_frame_button.value = "Next Timeframe";
     next_time_frame_button.classList.add("btn");
@@ -304,6 +311,7 @@ function addFieldToForm(type) {
     
     var add_time_frame_button = document.createElement("input");
     add_time_frame_button.type = "button";
+    add_time_frame_button.id = "add_time_frame_button[" + dataFeildId + "][0]";
     add_time_frame_button.name = "commit";
     add_time_frame_button.value = "Add Timeframe";
     add_time_frame_button.classList.add("btn");
@@ -313,6 +321,10 @@ function addFieldToForm(type) {
     
     var time_frame_id_text = document.createTextNode("Timeframe " + 1 + ":");
     
+    var time_frame_id_text = document.createElement("span");
+    time_frame_id_text.id = "time_frame_number[" + dataFeildId + "][0]";
+    time_frame_id_text.innerHTML = "Timeframe " + 1 + ":";
+    
     var time_frame_time_group = document.createElement("div");
     time_frame_time_group.classList.add("group-micro");
     
@@ -320,6 +332,7 @@ function addFieldToForm(type) {
     time_frame_time_start_label.innerHTML = "Start:\xa0";
     
     var time_frame_time_start = document.createElement("input");
+    time_frame_time_start.id = "time_frame_start[" + dataFeildId + "][0]";
     time_frame_time_start.name = "obj[data_feilds_time_start][][0]";
     time_frame_time_start.classList.add("input");
     time_frame_time_start.classList.add("input-sm");
@@ -329,16 +342,49 @@ function addFieldToForm(type) {
     time_frame_time_end_label.innerHTML = "End:\xa0\xa0\xa0";
     
     var time_frame_time_end = document.createElement("input");
+    time_frame_time_end.id = "time_frame_end[" + dataFeildId + "][0]";
     time_frame_time_end.name = "obj[data_feilds_time_end][][0]";
     time_frame_time_end.classList.add("input");
     time_frame_time_end.classList.add("input-sm");
     time_frame_time_end.type = "number";
+    
+    var move_left_time_frame_button = document.createElement("input");
+    move_left_time_frame_button.type = "button";
+    move_left_time_frame_button.id = "move_left_time_frame_button[" + dataFeildId + "][0]";
+    move_left_time_frame_button.name = "commit";
+    move_left_time_frame_button.value = "🠰 Move frame";
+    move_left_time_frame_button.classList.add("btn");
+    move_left_time_frame_button.classList.add("btn-xs");
+    move_left_time_frame_button.classList.add("color-white");
+    move_left_time_frame_button.setAttribute("onclick", "moveTimeFrameLeft(" + dataFeildId + ", 0);");
+    
+    var delete_time_frame_button = document.createElement("input");
+    delete_time_frame_button.type = "button";
+    delete_time_frame_button.id = "delete_time_frame_button[" + dataFeildId + "][0]";
+    delete_time_frame_button.name = "commit";
+    delete_time_frame_button.value = "Delete frame";
+    delete_time_frame_button.classList.add("btn");
+    delete_time_frame_button.classList.add("btn-xs");
+    delete_time_frame_button.classList.add("color-danger");
+    delete_time_frame_button.setAttribute("onclick", "deleteTimeFrame(" + dataFeildId + ", 0);");
+    
+    var move_right_time_frame_button = document.createElement("input");
+    move_right_time_frame_button.type = "button";
+    move_right_time_frame_button.id = "move_right_time_frame_button[" + dataFeildId + "][0]";
+    move_right_time_frame_button.name = "commit";
+    move_right_time_frame_button.value = "Move frame 🠲";
+    move_right_time_frame_button.classList.add("btn");
+    move_right_time_frame_button.classList.add("btn-xs");
+    move_right_time_frame_button.classList.add("color-white");
+    move_right_time_frame_button.setAttribute("onclick", "moveTimeFrameRight(" + dataFeildId + ", 0);");
 
     if (type == "text") {
         var time_frame_value_label = document.createElement("label");
         time_frame_value_label.innerHTML = "Text"
         var time_frame_value = document.createElement("textarea");
+        time_frame_value.id = "time_frame_value[" + dataFeildId + "][0]";
         time_frame_value.name = "obj[data_feilds_value][][0]";
+        time_frame_value.value = document.getElementById("new_field_text").value;
         time_frame_value.classList.add("textarea");
         time_frame_value.classList.add("textarea-vertical");
         time_frame_value.classList.add("size-fullwidth");
@@ -346,6 +392,7 @@ function addFieldToForm(type) {
         var time_frame_value_label = document.createElement("label");
         time_frame_value_label.innerHTML = "Link"
         var time_frame_value = document.createElement("select");
+        time_frame_value.id = "time_frame_value[" + dataFeildId + "][0]";
         time_frame_value.name = "obj[data_feilds_value][][0]";
         time_frame_value.classList.add("select");
         time_frame_value.classList.add("size-fullwidth");
@@ -356,6 +403,10 @@ function addFieldToForm(type) {
     		var option = document.createElement("option");
     		option.text = form_select.options[i].text;
     		option.value = form_select.options[i].value;
+    		
+    		if (form_select.options[i].value == form_select.value) {
+    		    option.selected = true;
+    		}
     		
     		time_frame_value.appendChild(option);
         }
@@ -376,10 +427,40 @@ function addFieldToForm(type) {
     var time_frames_checkbox = document.createElement("input");
     time_frames_checkbox.type = "checkbox";
     time_frames_checkbox.name = "obj[data_feilds_time][]";
-    time_frames_checkbox.id = "obj_data_feilds_time_";
+    time_frames_checkbox.id = "toggle_time_frames_checkbox[" + dataFeildId + "]";
     time_frames_checkbox.value = "on";
     time_frames_checkbox.setAttribute("onclick", "toggleTimeFrames(" + dataFeildId + ", this.checked);");
     time_frames_checkbox.checked = true;
+    
+    var move_left_data_feild_button = document.createElement("input");
+    move_left_data_feild_button.type = "button";
+    move_left_data_feild_button.id = "move_left_data_feild_button[" + dataFeildId + "]";
+    move_left_data_feild_button.name = "commit";
+    move_left_data_feild_button.value = "🠰 Move feild";
+    move_left_data_feild_button.classList.add("btn");
+    move_left_data_feild_button.classList.add("btn-sm");
+    move_left_data_feild_button.classList.add("color-white");
+    move_left_data_feild_button.setAttribute("onclick", "moveFeildLeft(" + dataFeildId + ");");
+    
+    var delete_data_feild_button = document.createElement("input");
+    delete_data_feild_button.type = "button";
+    delete_data_feild_button.id = "delete_data_feild_button[" + dataFeildId + "]";
+    delete_data_feild_button.name = "commit";
+    delete_data_feild_button.value = "Delete feild";
+    delete_data_feild_button.classList.add("btn");
+    delete_data_feild_button.classList.add("btn-sm");
+    delete_data_feild_button.classList.add("color-danger");
+    delete_data_feild_button.setAttribute("onclick", "deleteFeild(" + dataFeildId + ");");
+    
+    var move_right_data_feild_button = document.createElement("input");
+    move_right_data_feild_button.type = "button";
+    move_right_data_feild_button.id = "move_right_data_feild_button[" + dataFeildId + "]";
+    move_right_data_feild_button.name = "commit";
+    move_right_data_feild_button.value = "Move feild 🠲";
+    move_right_data_feild_button.classList.add("btn");
+    move_right_data_feild_button.classList.add("btn-sm");
+    move_right_data_feild_button.classList.add("color-white");
+    move_right_data_feild_button.setAttribute("onclick", "moveFeildRight(" + dataFeildId + ");");
     
     data_header_span.appendChild(hr);
     data_header_span.appendChild(br());
@@ -395,6 +476,9 @@ function addFieldToForm(type) {
     time_frame_time_group.appendChild(time_frame_time_end_label);
     time_frame_time_group.appendChild(time_frame_time_end);
     time_frame_time_group.appendChild(br());
+    time_frame_time_group.appendChild(move_left_time_frame_button);
+    time_frame_time_group.appendChild(delete_time_frame_button);
+    time_frame_time_group.appendChild(move_right_time_frame_button);
     
     time_frame_span.appendChild(previous_time_frame_button);
     time_frame_span.appendChild(next_time_frame_button);
@@ -417,6 +501,10 @@ function addFieldToForm(type) {
     data_footer_span.appendChild(br());
     data_footer_span.appendChild(time_frames_default);
     data_footer_span.appendChild(time_frames_checkbox);
+    data_footer_span.appendChild(br());
+    data_footer_span.appendChild(move_left_data_feild_button);
+    data_footer_span.appendChild(delete_data_feild_button);
+    data_footer_span.appendChild(move_right_data_feild_button);
     
     data_feild.appendChild(data_header_span);
     data_feild.appendChild(time_frames_div);
