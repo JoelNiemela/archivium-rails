@@ -9,17 +9,51 @@
 	<%= link_to "Edit account", edit_user_path(@user), :class=>"btn btn-sm color-white" %>
 <% end %>
 <hr>
-<h4><%= @user.username %>'s objs</h4>
-<% @user.objs.each do |obj| %>
-	<%= obj.id %>
-	<%= obj.name %>
-	<%= obj.obj_type %>
-	<%= obj.universe.name %>
-	<br>
-<% end %>
-<h4><%= @user.username %>'s universes</h4>
-<% @user.universes.each do |universe| %>
-	<%= universe.id %>
-	<%= universe.name %>
-	<br>
-<% end %>
+<h3><%= @user.username %>'s objs</h3>
+<table class="table table-striped table-hover">
+	<thead></thead>
+		<tr class="table-header">
+			<th>Name</th>
+			<th>Type</th>
+			<th>Universe</th>
+			<th>Owners</th>
+			<th>Created</th>
+			<th>Updated</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @user.objs.each do |obj| %>
+			<tr>
+				<td><%= link_to obj.name, obj_path(obj), :class=>"link" %></td>
+				<td><%= obj.obj_type %></td>
+				<td><%= link_to obj.universe.name, universe_path(obj.universe), :class=>"link" %></td>
+				<td><%= obj.users.map{ |user| link_to user.username, user_path(user), :class=>"link" }.to_sentence.html_safe %></td>
+				<td><%= time_ago_in_words(obj.created_at) %></td>
+				<td><%= time_ago_in_words(obj.updated_at) %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<br>
+
+<h3><%= @user.username %>'s universes</h3>
+<table class="table table-striped table-hover">
+	<thead></thead>
+		<tr class="table-header">
+			<th>Name</th>
+			<th>Owners</th>
+			<th>Created</th>
+			<th>Updated</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @user.universes.each do |universe| %>
+			<tr>
+				<td><%= link_to universe.name, universe_path(universe), :class=>"link" %></td>
+				<td><%= universe.users.map{ |user| link_to user.username, user_path(user), :class=>"link" }.to_sentence.html_safe %></td>
+				<td><%= time_ago_in_words(universe.created_at) %></td>
+				<td><%= time_ago_in_words(universe.updated_at) %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
