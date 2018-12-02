@@ -30,55 +30,25 @@ class ObjsController < ApplicationController
 	
 	def update
 		@obj.data = []
-		fields_name = params["obj"]["data_feilds_name"] || []
-		fields_value = params["obj"]["data_feilds_value"] || []
-		fields_type = params["obj"]["data_feilds_type"] || []
-		fields_time = params["obj"]["data_feilds_time"] || []
-		fields_time_start = params["obj"]["data_feilds_time_start"] || []
-		fields_time_end = params["obj"]["data_feilds_time_end"] || []
-		puts fields_time, '-----------------'
-		bool_fields_time = []
-		for i in 0..(fields_time.length-1) do
-			if fields_time[i+1] == "on" then
-				next
-			else
-				if fields_time[i] == "on" then
-					bool_fields_time.push(true)
+		obj_data_params = params["obj"] || []
+		
+		(obj_data_params[:tabs]||[]).each do |tab_id, tab_params|
+			tab = {:name => tab_params[:name], :data => []}
+			(tab_params[:feilds]||[]).each do |feild_id, feild_params|
+				if feild_params[:time] == "on" then
+					feild = {:name => feild_params[:name], :type => feild_params[:type], :values => [], :timeframes => true}
+					(feild_params[:frames]||[]).each do |frame_id, frame_params|
+						frame = {:value => frame_params[:value], :start => (frame_params[:time]||[])[:start], :end => (frame_params[:time]||[])[:end]}
+						feild[:values].push(frame)
+					end
 				else
-					bool_fields_time.push(false)
+					feild = {:name => feild_params[:name], :type => feild_params[:type], :value => feild_params[:value], :timeframes => false}
 				end
+				tab[:data].push(feild)
 			end
+			@obj.data.push(tab)
 		end
-		fields_time = bool_fields_time
-		puts fields_time, '-----------------'
-		puts fields_name, '-----------------'
-		puts fields_value, '-----------------'
-		puts fields_type, '-----------------'
-		puts fields_time_start, '-----------------'
-		puts fields_time_end, '-----------------'
-		[fields_name, fields_value, fields_type, fields_time, fields_time_start, fields_time_end].transpose.each do |name, value, type, time, time_start, time_end|
-			if time then
-				if type == "text" then
-					field = {:type => "text", :name => name, :values => [], :timeframes => true}
-					[value.values, time_start.values, time_end.values].transpose.each do |val, tstart, tend|
-						field[:values].push({:value => val, :start => tstart, :end => tend})
-					end
-					@obj.data.push(field)
-				elsif type == "link" then
-					field = {:type => "link", :name => name, :values => [], :timeframes => true}
-					[value.values, time_start.values, time_end.values].transpose.each do |val, tstart, tend|
-						field[:values].push({:value => val, :start => tstart, :end => tend})
-					end
-					@obj.data.push(field)
-				end
-			else
-				if type == "text" then
-					@obj.data.push({:type => "text", :name => name, :value => value[0.to_s], :timeframes => false})
-				elsif type == "link" then
-					@obj.data.push({:type => "link", :name => name, :value => value[0.to_s], :timeframes => false})
-				end
-			end
-		end
+		
 		puts @obj.data, '------------'
 		if @obj.update(obj_params) then
 			flash[:success] = "Object was successfully updated"
