@@ -580,14 +580,20 @@ function toggleTimeFrames(tabId, dataFeildId, state) {
     if (state) {
         var time_frame_span = document.getElementById("time_frame_span[" + tabId + "][" + dataFeildId + "][0]");
         time_frame_span.style.display = "block";
+        
+        var data_feild_value = document.getElementById("time_frame_value[" + tabId + "][" + dataFeildId + "][0]");
+        data_feild_value.name = "obj[tabs][" + tabId + "][feilds][" + dataFeildId + "][frames][0][value]";
     } else {
         var time_frame = document.getElementById("time_frame[" + tabId + "][" + dataFeildId + "][0]");
         var time_frame_span = document.getElementById("time_frame_span[" + tabId + "][" + dataFeildId + "][0]");
-        for (var i = 0; i < (time_frames_div.childElementCount)-1; i++) {
+        for (var i = 0; i < (time_frames_div.childElementCount); i++) {
             time_frames_div.children[i].style.display = "none";
         }
         time_frame.style.display = "block";
         time_frame_span.style.display = "none";
+        
+        var data_feild_value = document.getElementById("time_frame_value[" + tabId + "][" + dataFeildId + "][0]");
+        data_feild_value.name = "obj[tabs][" + tabId + "][feilds][" + dataFeildId + "][value]";
     }
 }
 
@@ -750,86 +756,90 @@ function addTimeFrame(tabId, dataFeildId, timeFrameId, type) {
     old_time_frame.style.display = "none";
 }
 
-function changeTimeFrameId(tabId, dataFeildId, timeFrameId, newDataFeildId, newTimeFrameId) {
+function changeTimeFrameId(tabId, dataFeildId, timeFrameId, newTabId, newDataFeildId, newTimeFrameId) {
     var time_frame =                   document.getElementById("time_frame[" + tabId + "][" +                   dataFeildId + "][" + timeFrameId + "]");
-        time_frame.id = "time_frame[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        time_frame.id = "time_frame[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
     
     var time_frame_span =              document.getElementById("time_frame_span[" + tabId + "][" +              dataFeildId + "][" + timeFrameId + "]");
-        time_frame_span.id = "time_frame_span[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        time_frame_span.id = "time_frame_span[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
     
     var previous_time_frame_button =   document.getElementById("previous_time_frame_button[" + tabId + "][" +   dataFeildId + "][" + timeFrameId + "]");
-        previous_time_frame_button.id = "previous_time_frame_button[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
-        previous_time_frame_button.setAttribute("onclick", "previousTimeFrame(" + tabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
+        previous_time_frame_button.id = "previous_time_frame_button[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        previous_time_frame_button.setAttribute("onclick", "previousTimeFrame(" + newTabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
     
     var next_time_frame_button =       document.getElementById("next_time_frame_button[" + tabId + "][" +       dataFeildId + "][" + timeFrameId + "]");
-        next_time_frame_button.id = "next_time_frame_button[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
-        next_time_frame_button.setAttribute("onclick", "nextTimeFrame(" + tabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
+        next_time_frame_button.id = "next_time_frame_button[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        next_time_frame_button.setAttribute("onclick", "nextTimeFrame(" + newTabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
     
     var add_time_frame_button =        document.getElementById("add_time_frame_button[" + tabId + "][" +        dataFeildId + "][" + timeFrameId + "]");
-        add_time_frame_button.id = "add_time_frame_button[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
-        add_time_frame_button.setAttribute("onclick", "addTimeFrame(" + tabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
+        add_time_frame_button.id = "add_time_frame_button[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        add_time_frame_button.setAttribute("onclick", "addTimeFrame(" + newTabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
     
     var time_frame_number =            document.getElementById("time_frame_number[" + tabId + "][" +            dataFeildId + "][" + timeFrameId + "]");
-        time_frame_number.id = "time_frame_number[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        time_frame_number.id = "time_frame_number[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
         time_frame_number.innerHTML = "Timeframe " + (newTimeFrameId+1) + ":";
     
     var time_frame_start =             document.getElementById("time_frame_start[" + tabId + "][" +             dataFeildId + "][" + timeFrameId + "]");
-        time_frame_start.id = "time_frame_start[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        time_frame_start.id = "time_frame_start[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
         time_frame_start.name = "obj[tabs][" + tabId + "][feilds][" + dataFeildId + "][frames][" + timeFrameId + "][time][start]";
     
     var time_frame_end =               document.getElementById("time_frame_end[" + tabId + "][" +               dataFeildId + "][" + timeFrameId + "]");
-        time_frame_end.id = "time_frame_end[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        time_frame_end.id = "time_frame_end[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
         time_frame_end.name = "obj[tabs][" + tabId + "][feilds][" + dataFeildId + "][frames][" + timeFrameId + "][time][end]";
     
     var move_left_time_frame_button =  document.getElementById("move_left_time_frame_button[" + tabId + "][" +  dataFeildId + "][" + timeFrameId + "]");
-        move_left_time_frame_button.id = "move_left_time_frame_button[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
-        move_left_time_frame_button.setAttribute("onclick", "moveTimeFrameLeft(" + tabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
+        move_left_time_frame_button.id = "move_left_time_frame_button[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        move_left_time_frame_button.setAttribute("onclick", "moveTimeFrameLeft(" + newTabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
     
     var delete_time_frame_button =     document.getElementById("delete_time_frame_button[" + tabId + "][" +     dataFeildId + "][" + timeFrameId + "]");
-        delete_time_frame_button.id = "delete_time_frame_button[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
-        delete_time_frame_button.setAttribute("onclick", "deleteTimeFrame(" + tabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
+        delete_time_frame_button.id = "delete_time_frame_button[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        delete_time_frame_button.setAttribute("onclick", "deleteTimeFrame(" + newTabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
     
     var move_right_time_frame_button = document.getElementById("move_right_time_frame_button[" + tabId + "][" + dataFeildId + "][" + timeFrameId + "]");
-        move_right_time_frame_button.id = "move_right_time_frame_button[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
-        move_right_time_frame_button.setAttribute("onclick", "moveTimeFrameRight(" + tabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
+        move_right_time_frame_button.id = "move_right_time_frame_button[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        move_right_time_frame_button.setAttribute("onclick", "moveTimeFrameRight(" + newTabId + ", " + newDataFeildId + ", " + newTimeFrameId + ");");
     
     var time_frame_value =             document.getElementById("time_frame_value[" + tabId + "][" +             dataFeildId + "][" + timeFrameId + "]");
-        time_frame_value.id = "time_frame_value[" + tabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
+        time_frame_value.id = "time_frame_value[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
         time_frame_value.name = "obj[tabs][" + tabId + "][feilds][" + dataFeildId + "][frames][" + timeFrameId + "][value]";
 }
 
-function changeFeildId(tabId, dataFeildId, newId) {
+function changeFeildId(tabId, dataFeildId, newTabId, newId) {
     var data_feild =                   document.getElementById("data_feilds[" + tabId + "][" +                  dataFeildId + "]");
-        data_feild.id = "data_feilds[" + tabId + "][" + newId + "]";
+        data_feild.id = "data_feilds[" + newTabId + "][" + newId + "]";
     
     var data_header_span =             document.getElementById("data_header_span[" + tabId + "][" +             dataFeildId + "]");
-        data_header_span.id = "data_header_span[" + tabId + "][" + newId + "]";
+        data_header_span.id = "data_header_span[" + newTabId + "][" + newId + "]";
     
     var time_frames =                  document.getElementById("time_frames[" + tabId + "][" +                  dataFeildId + "]");
-        time_frames.id = "time_frames[" + tabId + "][" + newId + "]";
+        time_frames.id = "time_frames[" + newTabId + "][" + newId + "]";
     
     for (var i = 0; i < time_frames.childElementCount; i++) {
-        changeTimeFrameId(tabId, dataFeildId, i, newId, i);
+        changeTimeFrameId(tabId, dataFeildId, i, newTabId, newId, i);
     }
     
     var data_footer_span =             document.getElementById("data_footer_span[" + tabId + "][" +             dataFeildId + "]");
-        data_footer_span.id = "data_footer_span[" + tabId + "][" + newId + "]";
+        data_footer_span.id = "data_footer_span[" + newTabId + "][" + newId + "]";
     
     var toggle_time_frames_checkbox =  document.getElementById("toggle_time_frames_checkbox[" + tabId + "][" +  dataFeildId + "]");
-        toggle_time_frames_checkbox.id = "toggle_time_frames_checkbox[" + tabId + "][" + newId + "]";
-        toggle_time_frames_checkbox.setAttribute("onclick", "toggleTimeFrames(" + tabId + ", " + newId + ", this.checked);");
+        toggle_time_frames_checkbox.id = "toggle_time_frames_checkbox[" + newTabId + "][" + newId + "]";
+        toggle_time_frames_checkbox.setAttribute("onclick", "toggleTimeFrames(" + newTabId + ", " + newId + ", this.checked);");
     
     var move_left_data_feild_button =  document.getElementById("move_left_data_feild_button[" + tabId + "][" +  dataFeildId + "]");
-        move_left_data_feild_button.id = "move_left_data_feild_button[" + tabId + "][" + newId + "]";
-        move_left_data_feild_button.setAttribute("onclick", "moveFeildLeft(" + tabId + ", " + newId + ");");
+        move_left_data_feild_button.id = "move_left_data_feild_button[" + newTabId + "][" + newId + "]";
+        move_left_data_feild_button.setAttribute("onclick", "moveFeildLeft(" + newTabId + ", " + newId + ");");
     
     var delete_data_feild_button =     document.getElementById("delete_data_feild_button[" + tabId + "][" +     dataFeildId + "]");
-        delete_data_feild_button.id = "delete_data_feild_button[" + tabId + "][" + newId + "]";
-        delete_data_feild_button.setAttribute("onclick", "deleteFeild(" + tabId + ", " + newId + ");");
+        delete_data_feild_button.id = "delete_data_feild_button[" + newTabId + "][" + newId + "]";
+        delete_data_feild_button.setAttribute("onclick", "deleteFeild(" + newTabId + ", " + newId + ");");
     
     var move_right_data_feild_button = document.getElementById("move_right_data_feild_button[" + tabId + "][" + dataFeildId + "]");
-        move_right_data_feild_button.id = "move_right_data_feild_button[" + tabId + "][" + newId + "]";
-        move_right_data_feild_button.setAttribute("onclick", "moveFeildRight(" + tabId + ", " + newId + ");");
+        move_right_data_feild_button.id = "move_right_data_feild_button[" + newTabId + "][" + newId + "]";
+        move_right_data_feild_button.setAttribute("onclick", "moveFeildRight(" + newTabId + ", " + newId + ");");
+}
+
+function changeTabId(tabId, newId) {
+    
 }
 
 function deleteTimeFrame(tabId, dataFeildId, timeFrameId) {
@@ -875,19 +885,17 @@ function deleteFeild(tabId, dataFeildId) {
     if (confirm("Are you sure you want to delete this feild")) {
         data_feild.parentNode.removeChild(data_feild);
         for (var i = dataFeildId+1; i < data_feilds_count; i++) {
-            changeFeildId(tabId, i, i-1);
+            changeFeildId(tabId, i, tabId, i-1);
         }
     }
-    var data_feild = document.getElementById("data_feilds[" + tabId + "][" + ((dataFeildId-1) >= 0 ? (dataFeildId-1) : dataFeildId) + "]");
-    data_feild.style.display = "block";
 }
 
 function moveFeildLeft(tabId, dataFeildId) {
     var data_feild = document.getElementById("data_feilds[" + tabId + "][" + dataFeildId + "]");
     var data_feilds_count = (data_feild.parentNode.childElementCount)-5;
     if (dataFeildId > 0) {
-        changeFeildId(tabId, dataFeildId, dataFeildId-1);
-        changeFeildId(tabId, dataFeildId-1, dataFeildId);
+        changeFeildId(tabId, dataFeildId, tabId, dataFeildId-1);
+        changeFeildId(tabId, dataFeildId-1, tabId, dataFeildId);
         data_feild.parentNode.insertBefore(data_feild, data_feild.previousElementSibling);
     }
 }
@@ -896,9 +904,40 @@ function moveFeildRight(tabId, dataFeildId) {
     var data_feild = document.getElementById("data_feilds[" + tabId + "][" + dataFeildId + "]");
     var data_feilds_count = (data_feild.parentNode.childElementCount)-5;
     if (dataFeildId < data_feilds_count) {
-        changeFeildId(tabId, dataFeildId+1, dataFeildId);
-        changeFeildId(tabId, dataFeildId, dataFeildId+1);
+        changeFeildId(tabId, dataFeildId+1, tabId, dataFeildId);
+        changeFeildId(tabId, dataFeildId, tabId, dataFeildId+1);
         data_feild.parentNode.insertBefore(data_feild, data_feild.nextElementSibling.nextElementSibling);
+    }
+}
+
+function deleteTab(tabId) {
+    var tab = document.getElementById("tabs[" + tabId + "]");
+    var tabs_count = (tab.parentNode.childElementCount);
+    if (confirm("Are you sure you want to delete this feild")) {
+        tab.parentNode.removeChild(tab);
+        for (var i = tab+1; i < tabs_count; i++) {
+            changeTabId(i, i-1);
+        }
+    }
+}
+
+function moveTabUp(tabId) {
+    var tab = document.getElementById("tabs[" + tabId + "]");
+    var tabs_count = (tabId.parentNode.childElementCount);
+    if (tabId > 0) {
+        changeTabId(tabId, tabId, tabId-1);
+        changeTabId(tabId, tabId-1, tabId);
+        tab.parentNode.insertBefore(tab, tab.previousElementSibling);
+    }
+}
+
+function moveTabDown(tabId) {
+    var tab = document.getElementById("tabs[" + tabId + "]");
+    var data_feilds_count = (tab.parentNode.childElementCount);
+    if (tabId < data_feilds_count) {
+        changeTabId(tabId, tabId+1, tabId);
+        changeTabId(tabId, tabId, tabId+1);
+        tab.parentNode.insertBefore(tab, tab.nextElementSibling.nextElementSibling);
     }
 }
 

@@ -37,13 +37,14 @@
 			<% end %>
 		</div>
 		<br>
-		
+
 		<div id="tabs_divs">
 			<% @obj.data.each.with_index do |tab_data, tab_id| %>
 				<div id="tabs[<%= tab_id %>]">
-					<h3><%= tab_data[:name] %></h3>
-					<!--<input name="obj[tabs_name][<%= tab_id %>]" type="hidden" value="<%= tab_data[:name] %>">-->
-					<input name="obj[tabs][<%= tab_id %>][name]" type="hidden" value="<%= tab_data[:name] %>">
+					<input name="obj[tabs][<%= tab_id %>][name]" class="input" value="<%= tab_data[:name] %>"> <br>
+					<%= submit_tag "🠱 Move tab", :class => "btn btn-xs color-white", :id => "move_up_tab_button[#{tab_id}]", :type => "button", :onclick => "moveTabUp(#{tab_id})" %>
+					<%= submit_tag "Delete tab", :class => "btn btn-xs color-danger", :id => "delete_tab_button[#{tab_id}]", :type => "button", :onclick => "deleteTab(#{tab_id})" %>
+					<%= submit_tag "Move tab 🠳", :class => "btn btn-xs color-white", :id => "move_down_tab_button[#{tab_id}]", :type => "button", :onclick => "moveTabDown(#{tab_id})" %>
 					<div id="fields_divs[<%= tab_id %>]" class="feild-frame-container well">
 						<% tab_data[:data].each.with_index do |data, i| %>
 							<div id="data_feilds[<%= tab_id %>][<%= i %>]" class="feild-frame float-left">
@@ -51,14 +52,11 @@
 									<div id="data_header_span[<%= tab_id %>][<%= i %>]">
 										<hr class="size-fullwidth"> <br>
 										<% if data[:type] == "text" then %>
-											<!--<input name="obj[data_feilds_type][<%= tab_id %>][]" type="hidden" value="text">-->
 											<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="text">
 										<% elsif data[:type] == "link" then %>
-											<!--<input name="obj[data_feilds_type][<%= tab_id %>][]" type="hidden" value="link">-->
 											<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="link">
 										<% end %>
 										<label>Name</label> <br>
-										<!--<input name="obj[data_feilds_name][<%= tab_id %>][]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>-->
 										<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][name]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
 									</div>
 									<div id="time_frames[<%= tab_id %>][<%= i %>]">
@@ -69,8 +67,6 @@
 													<%= submit_tag 'Add Timeframe', :class => "btn size-fullwidth float-left", :id => "add_time_frame_button[#{tab_id}][#{i}][#{time_frame_id}]", :type => 'button', :onclick => "addTimeFrame(#{tab_id}, #{i}, #{time_frame_id}, '#{data[:type]}');" %> <br>
 													<span id="time_frame_number[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]">Timeframe <%= time_frame_id+1 %>:</span><br>
 													<div class="group-micro">
-														<!--<label>Start:&nbsp;</label> <input id="time_frame_start[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" name="obj[data_feilds_time_start][<%= tab_id %>][][<%= time_frame_id %>]" class="input input-sm" type="number" value="<%= value[:start] %>"> <br>
-														<label>End:&nbsp;&nbsp;&nbsp;</label> <input id="time_frame_end[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" name="obj[data_feilds_time_end][<%= tab_id %>][][<%= time_frame_id %>]" class="input input-sm" type="number" value="<%= value[:end] %>"> <br>-->
 														<label>Start:&nbsp;</label> <input id="time_frame_start[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][frames][<%= time_frame_id %>][time][start]" class="input input-sm" type="number" value="<%= value[:start] %>"> <br>
 														<label>End:&nbsp;&nbsp;&nbsp;</label> <input id="time_frame_end[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][frames][<%= time_frame_id %>][time][end]" class="input input-sm" type="number" value="<%= value[:end] %>"> <br>
 														<%= submit_tag "🠰 Move frame", :class => "btn btn-xs color-white", :id => "move_left_time_frame_button[#{tab_id}][#{i}][#{time_frame_id}]", :type => "button", :onclick => "moveTimeFrameLeft(#{tab_id}, #{i}, #{time_frame_id})" %>
@@ -80,11 +76,9 @@
 												</div>
 												<% if data[:type] == "text" then %>
 													<label>Text</label> <br>
-													<!--<textarea id="time_frame_value[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" name="obj[data_feilds_value][<%= tab_id %>][][<%= time_frame_id %>]" class="textarea textarea-vertical size-fullwidth"><%= value[:value] %></textarea> <br>-->
 													<textarea id="time_frame_value[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][frames][<%= time_frame_id %>][value]" class="textarea textarea-vertical size-fullwidth"><%= value[:value] %></textarea> <br>
 												<% elsif data[:type] == "link" then %>
 													<label>Link</label> <br>
-													<!--<select id="time_frame_value[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" name="obj[data_feilds_value][<%= tab_id %>][][<%= time_frame_id %>]" class="select size-fullwidth">-->
 													<select id="time_frame_value[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][frames][<%= time_frame_id %>][value]" class="select size-fullwidth">
 														<% if universes.length > 0 then %>
 															<% universes_objs[(@obj.universe ? @obj.universe.id : universes[0][1])].each do |universe_obj| %>
@@ -115,14 +109,11 @@
 									<div id="data_header_span[<%= tab_id %>][<%= i %>]">
 										<hr class="size-fullwidth"> <br>
 										<% if data[:type] == "text" then %>
-											<!--<input name="obj[data_feilds_type][<%= tab_id %>][]" type="hidden" value="text">-->
 											<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="text">
 										<% elsif data[:type] == "link" then %>
-											<!--<input name="obj[data_feilds_type][<%= tab_id %>][]" type="hidden" value="link">-->
 											<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="link">
 										<% end %>
 										<label>Name</label> <br>
-										<!--<input name="obj[data_feilds_name][<%= tab_id %>][]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>-->
 										<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][name]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
 									</div>
 									<div id="time_frames[<%= tab_id %>][<%= i %>]">
@@ -132,8 +123,6 @@
 												<%= submit_tag 'Add Timeframe', :class => "btn size-fullwidth float-left", :id => "add_time_frame_button[#{tab_id}][#{i}][0]", :type => 'button', :onclick => "addTimeFrame(#{tab_id}, #{i}, 0, '#{data[:type]}');" %> <br>
 												<span id="time_frame_number[<%= tab_id %>][<%= i %>][0]">Timeframe 1:</span><br>
 												<div class="group-micro">
-													<!--<label>Start:&nbsp;</label> <input id="time_frame_start[<%= tab_id %>][<%= i %>][0]" name="obj[data_feilds_time_start][<%= tab_id %>][][0]" class="input input-sm" type="number"> <br>
-													<label>End:&nbsp;&nbsp;&nbsp;</label> <input id="time_frame_end[<%= tab_id %>][<%= i %>][0]" name="obj[data_feilds_time_end][<%= tab_id %>][][0]" class="input input-sm" type="number"> <br>-->
 													<label>Start:&nbsp;</label> <input id="time_frame_start[<%= tab_id %>][<%= i %>][0]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][frames][0][time][start]" class="input input-sm" type="number"> <br>
 													<label>End:&nbsp;&nbsp;&nbsp;</label> <input id="time_frame_end[<%= tab_id %>][<%= i %>][0]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][frames][0][time][end]" class="input input-sm" type="number"> <br>
 													<%= submit_tag "🠰 Move frame", :class => "btn btn-xs color-white", :id => "move_left_time_frame_button[#{tab_id}][#{i}][0]", :type => "button", :onclick => "moveTimeFrameLeft(#{tab_id}, #{i}, 0)" %>
@@ -143,11 +132,9 @@
 											</div>
 											<% if data[:type] == "text" then %>
 												<label>Text</label> <br>
-												<!--<textarea id="time_frame_value[<%= tab_id %>][<%= i %>][0]"  name="obj[data_feilds_value][<%= tab_id %>][][0]" class="textarea textarea-vertical size-fullwidth"><%= data[:value] %></textarea> <br>-->
 												<textarea id="time_frame_value[<%= tab_id %>][<%= i %>][0]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][value]" class="textarea textarea-vertical size-fullwidth"><%= data[:value] %></textarea> <br>
 											<% elsif data[:type] == "link" then %>
 												<label>Link</label> <br>
-												<!--<select id="time_frame_value[<%= tab_id %>][<%= i %>][0]"  name="obj[data_feilds_value][<%= tab_id %>][][0]" class="select size-fullwidth">-->
 												<select id="time_frame_value[<%= tab_id %>][<%= i %>][0]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][value]" class="select size-fullwidth">
 													<% if universes.length > 0 then %>
 														<% universes_objs[(@obj.universe ? @obj.universe.id : universes[0][1])].each do |universe_obj| %>
