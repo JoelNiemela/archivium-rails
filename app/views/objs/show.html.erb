@@ -45,7 +45,7 @@
 						<% elsif feild[:type] == "link" %>
 							<%= feild[:name] %>:
 							<hr>
-							<% if Obj.find(feild[:value].to_i) %>
+							<% if Obj.exists?(id: feild[:value].to_i) %>
 								<%= link_to Obj.find(feild[:value].to_i).name, obj_path(feild[:value].to_i), :class => "link" %> <br>
 							<% else %>
 								broken-link <br>

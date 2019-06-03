@@ -305,7 +305,11 @@ function addTabToForm() {
 }
 
 function addFieldToForm(type) {
-    var tabId = document.getElementById("new_field_tab").value;
+    if (type == "text") {
+        var tabId = document.getElementById("new_field_tab").value;
+    } else if (type == "link") {
+        var tabId = document.getElementById("new_link_field_tab").value;   
+    }
     var fields_div = document.getElementById("fields_divs[" + tabId + "]");
     
     var dataFeildId = (fields_div.childElementCount)-4;
