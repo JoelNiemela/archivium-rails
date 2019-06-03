@@ -3,8 +3,8 @@
 	<%= obj.id %>
 	<%= obj.name %>
 	<%= obj.obj_type %>
+	<%= link_to "View", obj_path(obj), :class=>"btn btn-xs color-success" %>
 	<% if obj.users.include? current_user or obj.universe.users.include? current_user then %>
-		<%= link_to "View", obj_path(obj), :class=>"btn btn-xs color-success" %>
 		<%= link_to "Edit", edit_obj_path(obj), :class=>"btn btn-xs color-primary" %>
 		<%= link_to "Delete", obj_path(obj), method: :delete, data: {confirm: "Are you sure you want to delete this object?"}, :class=>"btn btn-xs color-danger" %>
 	<% end %>
