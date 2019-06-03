@@ -16,7 +16,7 @@
 							<div id="feild-<%= feild_id %>-values">
 								<% feild[:values].each_with_index do |value, value_id| %>
 									<div id="feild-<%= feild_id %>-value-<%= value_id %>">
-										<%= value[:start].to_i %>&mdash;<%= value[:end].to_i %>: <%= value[:value] %><br>
+										<%= value[:start].to_i %>&mdash;<%= value[:end].to_i %>: <%= value[:value] %> <br>
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-value" value="<%= value[:value] %>">
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-start" value="<%= value[:start].to_i %>">
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-end" value="<%= value[:end].to_i %>">
@@ -29,7 +29,7 @@
 							<div id="feild-<%= feild_id %>-values">
 								<% feild[:values].each_with_index do |value, value_id| %>
 									<div id="feild-<%= feild_id %>-value-<%= value_id %>">
-										<%= value[:start].to_i %>&mdash;<%= value[:end].to_i %>: <%= link_to Obj.find(value[:value]).name, obj_path(value[:value]), :class => "link" %><br>
+										<%= value[:start].to_i %>&mdash;<%= value[:end].to_i %>: <%= link_to Obj.find(value[:value]).name, obj_path(value[:value]), :class => "link" %> <br>
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-value" value="<%= value[:value] %>">
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-start" value="<%= value[:start].to_i %>">
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-end" value="<%= value[:end].to_i %>">
@@ -45,6 +45,7 @@
 						<% elsif feild[:type] == "link" %>
 							<%= feild[:name] %>:
 							<hr>
+							<%= link_to Obj.find(feild[:value].to_i).name, obj_path(feild[:value].to_i), :class => "link" %> <br>
 						<% end %>
 					<% end %>
 				</div>
