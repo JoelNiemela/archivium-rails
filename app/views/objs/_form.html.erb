@@ -27,7 +27,7 @@
 			<%= f.text_field :name, :class => "input size-fullwidth" %> <br>
 			
 			<%= f.label :obj_type %> <br>
-			<%= f.select :obj_type, ["Charactrer", "Location", "Item"], {}, :class => "select size-fullwidth" %> <br>
+			<%= f.select :obj_type, ["Character", "Location", "Item"], {}, :class => "select size-fullwidth" %> <br>
 			
 			<%= f.label :universe_id %> <br>
 			<% if universes.length > 0 then %>
@@ -41,7 +41,7 @@
 		<div id="tabs_divs">
 			<% @obj.data.each.with_index do |tab_data, tab_id| %>
 				<div id="tabs[<%= tab_id %>]">
-					<input name="obj[tabs][<%= tab_id %>][name]" class="input" value="<%= tab_data[:name] %>"> <br>
+					<input id="tabs_name[<%= tab_id %>]" name="obj[tabs][<%= tab_id %>][name]" class="input" value="<%= tab_data[:name] %>"> <br>
 					<%= submit_tag "🠱 Move tab", :class => "btn btn-xs color-white", :id => "move_up_tab_button[#{tab_id}]", :type => "button", :onclick => "moveTabUp(#{tab_id})" %>
 					<%= submit_tag "Delete tab", :class => "btn btn-xs color-danger", :id => "delete_tab_button[#{tab_id}]", :type => "button", :onclick => "deleteTab(#{tab_id})" %>
 					<%= submit_tag "Move tab 🠳", :class => "btn btn-xs color-white", :id => "move_down_tab_button[#{tab_id}]", :type => "button", :onclick => "moveTabDown(#{tab_id})" %>
@@ -52,12 +52,12 @@
 									<div id="data_header_span[<%= tab_id %>][<%= i %>]">
 										<hr class="size-fullwidth"> <br>
 										<% if data[:type] == "text" then %>
-											<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="text">
+											<input id="feilds_type[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="text">
 										<% elsif data[:type] == "link" then %>
-											<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="link">
+											<input id="feilds_type[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="link">
 										<% end %>
 										<label>Name</label> <br>
-										<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][name]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
+										<input id="feilds_name[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][name]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
 									</div>
 									<div id="time_frames[<%= tab_id %>][<%= i %>]">
 										<% data[:values].each_with_index do |value, time_frame_id| %>
@@ -98,7 +98,7 @@
 									</div>
 									<div id="data_footer_span[<%= tab_id %>][<%= i %>]">
 										<label>Enable time frames</label> <br>
-										<%= hidden_field_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "off" %>
+										<%= hidden_field_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "off", :id => "time_frames_default[#{tab_id}][#{i}]" %>
 										<%= check_box_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "on", data[:timeframes], :id => "toggle_time_frames_checkbox[#{tab_id}][#{i}]", :onclick => "toggleTimeFrames(#{tab_id}, #{i}, this.checked);" %>
 										<br>
 										<%= submit_tag "🠰 Move feild", :class => "btn btn-sm color-white", :id => "move_left_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "moveFeildLeft(#{tab_id}, #{i})" %>
@@ -109,12 +109,12 @@
 									<div id="data_header_span[<%= tab_id %>][<%= i %>]">
 										<hr class="size-fullwidth"> <br>
 										<% if data[:type] == "text" then %>
-											<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="text">
+											<input id="feilds_type[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="text">
 										<% elsif data[:type] == "link" then %>
-											<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="link">
+											<input id="feilds_type[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="link">
 										<% end %>
 										<label>Name</label> <br>
-										<input name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][name]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
+										<input id="feilds_name[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][name]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
 									</div>
 									<div id="time_frames[<%= tab_id %>][<%= i %>]">
 										<div id="time_frame[<%= tab_id %>][<%= i %>][0]" style="display: block">
@@ -153,7 +153,7 @@
 									</div>
 									<div id="data_footer_span[<%= tab_id %>][<%= i %>]">
 										<label>Enable time frames</label> <br>
-										<%= hidden_field_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "off" %>
+										<%= hidden_field_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "off", :id => "time_frames_default[#{tab_id}][#{i}]" %>
 										<%= check_box_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "on", data[:timeframes], :id => "toggle_time_frames_checkbox[#{tab_id}][#{i}]", :onclick => "toggleTimeFrames(#{tab_id}, #{i}, this.checked);" %>
 										<br>
 										<%= submit_tag "🠰 Move feild", :class => "btn btn-sm color-white", :id => "move_left_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "moveFeildLeft(#{tab_id}, #{i})" %>

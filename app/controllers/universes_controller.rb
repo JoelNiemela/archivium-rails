@@ -1,7 +1,11 @@
 class UniversesController < ApplicationController
-	before_action :set_universe, only: [:edit, :update, :show, :destroy]
-	before_action :require_same_user, only: [:edit, :update, :destroy]
+	before_action :set_universe, only: [:add_user, :edit, :update, :show, :destroy]
+	before_action :require_same_user, only: [:add_user, :edit, :update, :destroy]
    
+  def add_user
+  	
+  end
+  
 	def new
 		@universe = Universe.new
 	end
@@ -29,6 +33,9 @@ class UniversesController < ApplicationController
 	end
 	
 	def update
+		if params[:post][:user] then
+			UserUniverse.create(:user_id => params[:post][:user].to_i, :universe => @universe)
+		end
 		if @universe.update(universe_params) then
 			flash[:success] = "Universe was successfully updated"
 			redirect_to universe_path(@universe)
@@ -45,7 +52,7 @@ class UniversesController < ApplicationController
 	
 	private
 	def universe_params
-		params.require(:universe).permit(:name)
+		params.require(:universe).permit(:name, :users)
 	end
 	
 	def set_universe

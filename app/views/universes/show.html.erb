@@ -4,19 +4,20 @@
 <br>
 <br>
 <br>
-<%= link_to "Back to objects index", universes_path, :class=>"btn btn-sm color-white" %>
+<%= link_to "Back to universes index", universes_path, :class=>"btn btn-sm color-white" %>
 <% if logged_in? && @universe.users.include?(current_user) then %>
-	<%= link_to "Edit object", edit_universe_path(@universe), :class=>"btn btn-sm color-white" %>
+	<%= link_to "Edit universe", edit_universe_path(@universe), :class=>"btn btn-sm color-white" %>
+	<%= link_to "Add co-creator", add_user_universe_path(@universe), :class=>"btn btn-sm color-white" %>
 <% end %>
 <hr>
 <h4>Universe's users</h4>
 <% @universe.users.each do |user| %>
 	<%= user.id %>
-	<%= user.username %>
+	<%= link_to user.username, user_path(user), :class=>"link" %>
 	<br>
 <% end %>
 <h4>Universe's objs</h4>
 <% @universe.objs.each do |obj| %>
-	<%= obj.name %>
+	<%= link_to obj.name, obj_path(obj), :class=>"link" %>
 	<br>
 <% end %>

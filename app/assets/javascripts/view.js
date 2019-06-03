@@ -253,21 +253,52 @@ function addTabToForm() {
     var tabDiv = document.createElement("div");
     tabDiv.id = "tabs[" + tabId + "]";
     
-    var title = document.createElement("h3");
-    title.innerHTML = document.getElementById("new_tab_name").value;
+    var nameInput = document.createElement("input");
+    nameInput.id = "tabs_name[" + tabId + "]";
+    nameInput.name = "obj[tabs][" + tabId + "][name]";
+    nameInput.classList.add("input");
+    nameInput.value = document.getElementById("new_tab_name").value;
     
-    var titleHidden = document.createElement("input");
-    titleHidden.name = "obj[tabs][" + tabId + "][name]";
-    titleHidden.type = "hidden";
-    titleHidden.value = document.getElementById("new_tab_name").value;
+    var move_up_tab_button = document.createElement("input");
+    move_up_tab_button.type = "button";
+    move_up_tab_button.id = "move_up_tab_button[" + tabId + "]";
+    move_up_tab_button.name = "commit";
+    move_up_tab_button.value = "🠱 Move tab";
+    move_up_tab_button.classList.add("btn");
+    move_up_tab_button.classList.add("btn-xs");
+    move_up_tab_button.classList.add("color-white");
+    move_up_tab_button.setAttribute("onclick", "moveTabUp(" + tabId + ");");
+    
+    var delete_tab_button = document.createElement("input");
+    delete_tab_button.type = "button";
+    delete_tab_button.id = "delete_tab_button[" + tabId + "]";
+    delete_tab_button.name = "commit";
+    delete_tab_button.value = "Delete tab";
+    delete_tab_button.classList.add("btn");
+    delete_tab_button.classList.add("btn-xs");
+    delete_tab_button.classList.add("color-danger");
+    delete_tab_button.setAttribute("onclick", "deleteTab(" + tabId + ");");
+    
+    var move_down_tab_button = document.createElement("input");
+    move_down_tab_button.type = "button";
+    move_down_tab_button.id = "move_down_tab_button[" + tabId + "]";
+    move_down_tab_button.name = "commit";
+    move_down_tab_button.value = "Move tab 🠳";
+    move_down_tab_button.classList.add("btn");
+    move_down_tab_button.classList.add("btn-xs");
+    move_down_tab_button.classList.add("color-white");
+    move_down_tab_button.setAttribute("onclick", "moveTabDown(" + tabId + ");");
     
     var fields_divs = document.createElement("div");
     fields_divs.id = "fields_divs[" + tabId + "]";
     fields_divs.classList.add("feild-frame-container");
     fields_divs.classList.add("well");
     
-    tabDiv.appendChild(title);
-    tabDiv.appendChild(titleHidden);
+    tabDiv.appendChild(nameInput);
+    tabDiv.appendChild(br());
+    tabDiv.appendChild(move_up_tab_button);
+    tabDiv.appendChild(delete_tab_button);
+    tabDiv.appendChild(move_down_tab_button);
     tabDiv.appendChild(fields_divs);
     
     tabs_div.appendChild(tabDiv);
@@ -291,6 +322,7 @@ function addFieldToForm(type) {
 	hr.classList.add("size-fullwidth");
 	
 	var data_feild_type = document.createElement("input");
+	data_feild_type.id = "feilds_type[" + tabId + "][" + dataFeildId + "]";
     data_feild_type.name = "obj[tabs][" + tabId + "][feilds][" + dataFeildId + "][type]";
     data_feild_type.type = "hidden";
     data_feild_type.value = type;
@@ -299,6 +331,7 @@ function addFieldToForm(type) {
     data_feild_name_label.innerHTML = "Name";
     
     var data_feild_name = document.createElement("input");
+    data_feild_name.id = "feilds_name[" + tabId + "][" + dataFeildId + "]";
     data_feild_name.name = "obj[tabs][" + tabId + "][feilds][" + dataFeildId + "][name]";
     if (type == "text") {
         data_feild_name.value = document.getElementById("new_field_name").value;
@@ -449,8 +482,8 @@ function addFieldToForm(type) {
     
     var time_frames_default = document.createElement("input");
     time_frames_default.type = "hidden";
+    time_frames_default.id = "time_frames_default[" + tabId + "][" + dataFeildId + "]";
     time_frames_default.name = "obj[tabs][" + tabId + "][feilds][" + dataFeildId + "][time]";
-    time_frames_default.id = "obj_data_feilds_time_";
     time_frames_default.value = "off";
     
     var time_frames_checkbox = document.createElement("input");
@@ -801,7 +834,14 @@ function changeTimeFrameId(tabId, dataFeildId, timeFrameId, newTabId, newDataFei
     
     var time_frame_value =             document.getElementById("time_frame_value[" + tabId + "][" +             dataFeildId + "][" + timeFrameId + "]");
         time_frame_value.id = "time_frame_value[" + newTabId + "][" + newDataFeildId + "][" + newTimeFrameId + "]";
-        time_frame_value.name = "obj[tabs][" + tabId + "][feilds][" + dataFeildId + "][frames][" + timeFrameId + "][value]";
+        
+    var toggle_time_frames_checkbox =  document.getElementById("toggle_time_frames_checkbox[" + tabId + "][" +  dataFeildId + "]");
+    
+    if (toggle_time_frames_checkbox.checked) {
+        time_frame_value.name = "obj[tabs][" + newTabId + "][feilds][" + newDataFeildId + "][frames][" + newTimeFrameId + "][value]";
+    } else {
+        time_frame_value.name = "obj[tabs][" + newTabId + "][feilds][" + newDataFeildId + "][value]";
+    }
 }
 
 function changeFeildId(tabId, dataFeildId, newTabId, newId) {
@@ -810,6 +850,14 @@ function changeFeildId(tabId, dataFeildId, newTabId, newId) {
     
     var data_header_span =             document.getElementById("data_header_span[" + tabId + "][" +             dataFeildId + "]");
         data_header_span.id = "data_header_span[" + newTabId + "][" + newId + "]";
+    
+    var data_feild_type =              document.getElementById("feilds_type[" + tabId + "][" +                  dataFeildId + "]");
+    	data_feild_type.id = "feilds_type[" + newTabId + "][" + newId + "]";
+        data_feild_type.name = "obj[tabs][" + newTabId + "][feilds][" + newId + "][type]";
+
+    var data_feild_name =              document.getElementById("feilds_name[" + tabId + "][" +                  dataFeildId + "]");
+        data_feild_name.id = "feilds_name[" + newTabId + "][" + newId + "]";
+        data_feild_name.name = "obj[tabs][" + newTabId + "][feilds][" + newId + "][name]";
     
     var time_frames =                  document.getElementById("time_frames[" + tabId + "][" +                  dataFeildId + "]");
         time_frames.id = "time_frames[" + newTabId + "][" + newId + "]";
@@ -821,8 +869,13 @@ function changeFeildId(tabId, dataFeildId, newTabId, newId) {
     var data_footer_span =             document.getElementById("data_footer_span[" + tabId + "][" +             dataFeildId + "]");
         data_footer_span.id = "data_footer_span[" + newTabId + "][" + newId + "]";
     
+    var time_frames_default =          document.getElementById("time_frames_default[" + tabId + "][" +          dataFeildId + "]");
+        time_frames_default.id = "time_frames_default[" + newTabId + "][" + newId + "]";
+        time_frames_default.name = "obj[tabs][" + newTabId + "][feilds][" + newId + "][time]";
+    
     var toggle_time_frames_checkbox =  document.getElementById("toggle_time_frames_checkbox[" + tabId + "][" +  dataFeildId + "]");
         toggle_time_frames_checkbox.id = "toggle_time_frames_checkbox[" + newTabId + "][" + newId + "]";
+        toggle_time_frames_checkbox.name = "obj[tabs][" + newTabId + "][feilds][" + newId + "][time]";
         toggle_time_frames_checkbox.setAttribute("onclick", "toggleTimeFrames(" + newTabId + ", " + newId + ", this.checked);");
     
     var move_left_data_feild_button =  document.getElementById("move_left_data_feild_button[" + tabId + "][" +  dataFeildId + "]");
@@ -839,7 +892,27 @@ function changeFeildId(tabId, dataFeildId, newTabId, newId) {
 }
 
 function changeTabId(tabId, newId) {
+    var tabDiv = document.getElementById("tabs[" + tabId + "]");
+        tabDiv.id = "tabs[" + newId + "]";
     
+    var nameInput = document.getElementById("tabs_name[" + tabId + "]");
+        nameInput.id = "tabs_name[" + newId + "]";
+        nameInput.name = "obj[tabs][" + newId + "][name]";
+    
+    var move_up_tab_button = document.getElementById("move_up_tab_button[" + tabId + "]");
+        move_up_tab_button.id = "move_up_tab_button[" + newId + "]";
+        move_up_tab_button.setAttribute("onclick", "moveTabUp(" + newId + ");");
+    
+    var delete_tab_button = document.getElementById("delete_tab_button[" + tabId + "]");
+        delete_tab_button.id = "delete_tab_button[" + newId + "]";
+        delete_tab_button.setAttribute("onclick", "deleteTab(" + newId + ");");
+    
+    var move_down_tab_button = document.getElementById("move_down_tab_button[" + tabId + "]");
+        move_down_tab_button.id = "move_down_tab_button[" + newId + "]";
+        move_down_tab_button.setAttribute("onclick", "moveTabDown(" + newId + ");");
+    
+    var fields_divs = document.getElementById("fields_divs[" + tabId + "]");
+        fields_divs.id = "fields_divs[" + newId + "]";
 }
 
 function deleteTimeFrame(tabId, dataFeildId, timeFrameId) {
@@ -923,10 +996,10 @@ function deleteTab(tabId) {
 
 function moveTabUp(tabId) {
     var tab = document.getElementById("tabs[" + tabId + "]");
-    var tabs_count = (tabId.parentNode.childElementCount);
+    var tabs_count = (tab.parentNode.childElementCount);
     if (tabId > 0) {
-        changeTabId(tabId, tabId, tabId-1);
-        changeTabId(tabId, tabId-1, tabId);
+        changeTabId(tabId, tabId-1);
+        changeTabId(tabId-1, tabId);
         tab.parentNode.insertBefore(tab, tab.previousElementSibling);
     }
 }
@@ -935,8 +1008,8 @@ function moveTabDown(tabId) {
     var tab = document.getElementById("tabs[" + tabId + "]");
     var data_feilds_count = (tab.parentNode.childElementCount);
     if (tabId < data_feilds_count) {
-        changeTabId(tabId, tabId+1, tabId);
-        changeTabId(tabId, tabId, tabId+1);
+        changeTabId(tabId+1, tabId);
+        changeTabId(tabId, tabId+1);
         tab.parentNode.insertBefore(tab, tab.nextElementSibling.nextElementSibling);
     }
 }

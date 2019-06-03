@@ -1,14 +1,17 @@
 class ObjsController < ApplicationController
 	before_action :set_obj, only: [:edit, :update, :show, :destroy]
-	before_action :require_same_user, only: [:edit, :update, :destroy]
+	before_action :require_same_user, only: []
+	before_action :require_same_user_or_universe, only: [:edit, :update, :destroy]
    
 	def new
 		@obj = Obj.new
+		@obj.data = [{:name=>"general", :data=>[]}]
 	end
 	
 	def create
 		@obj = Obj.new(obj_params)
 		@obj.users = [current_user]
+		read_form
 		if @obj.save then
 			flash[:success] = "Successfully created new object"
 			redirect_to obj_path(@obj)
@@ -29,8 +32,28 @@ class ObjsController < ApplicationController
 	end
 	
 	def update
+		read_form
+		
+		if @obj.update(obj_params) then
+			flash[:success] = "Object was successfully updated"
+			redirect_to obj_path(@obj)
+		else
+			render 'edit'
+		end
+	end
+	
+	def destroy
+		@obj.destroy
+		flash[:success] = "Object was successfully deleted"
+		redirect_to root_path
+	end
+	
+	private
+	def read_form
 		@obj.data = []
 		obj_data_params = params["obj"] || []
+		
+		puts obj_data_params, '------------'
 		
 		(obj_data_params[:tabs]||[]).each do |tab_id, tab_params|
 			tab = {:name => tab_params[:name], :data => []}
@@ -50,23 +73,10 @@ class ObjsController < ApplicationController
 		end
 		
 		puts @obj.data, '------------'
-		if @obj.update(obj_params) then
-			flash[:success] = "Object was successfully updated"
-			redirect_to obj_path(@obj)
-		else
-			render 'edit'
-		end
 	end
 	
-	def destroy
-		@obj.destroy
-		flash[:success] = "Object was successfully deleted"
-		redirect_to root_path
-	end
-	
-	private
 	def obj_params
-		params.require(:obj).permit(:name, :obj_type, :universe_id, :data)
+		params.require(:obj).permit(:name, :obj_type, :universe_id, :tabs)
 	end
 	
 	def set_obj
@@ -75,6 +85,13 @@ class ObjsController < ApplicationController
   
 	def require_same_user
 		if not @obj.users.include? current_user then
+			flash[:danger] =  "You can only edit your own objects"  
+			redirect_to root_path
+		end
+	end
+	
+	def require_same_user_or_universe
+		if not (@obj.users.include? current_user or @obj.universe.users.include? current_user) then
 			flash[:danger] =  "You can only edit your own objects"  
 			redirect_to root_path
 		end
