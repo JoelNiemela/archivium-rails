@@ -1,14 +1,73 @@
 .link {
+  position: relative;
+  text-decoration: none;
+  border: none;
+  &.link-animated {
+    color: #069;
+  }
+  &:not(.link-animated) {
     color: black;
-    text-decoration: none;
+  }
 }
 
-.link:hover {
-    color: #666;
+.link:focus,.link:hover {
+  outline: none;
+  &.link-broken {
+    color: red;
+  }
+  &:not(.link-broken) {
+    &.link-animated {
+      color: #069;
+    }
+    &:not(.link-animated) {
+      color: #666;
+    }
+  }
+}
+
+.link:after {
+  &.link-broken {
+    color: red;
+  }
+  &:not(.link-broken) {
+    color: #069;
+  }
+}
+
+.link-animated:after {
+  content: '';
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  background: #069;
+  transition: 0.2s;
+}
+
+.link-animated.link-broken:after {
+  background: red;
+}
+
+.link-animated:hover:after {
+  width: 100%;
+}
+
+.link-animated:focus:after {
+  width: 100%;
 }
 
 .link-background {
-    padding: 3px 10px 3px 10px;
-    border-radius: 50px;
-    background: lightgray;
+  padding: 3px 10px 3px 10px;
+  border-radius: 50px;
+  background: lightgray;
+}
+
+.link-broken {
+  &.link-animated {
+    color: red;
+  }
+  &:not(.link-animated) {
+    color: #c90b0b;
+  }
 }

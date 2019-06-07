@@ -16,20 +16,32 @@
 							<div id="feild-<%= feild_id %>-values">
 								<% feild[:values].each_with_index do |value, value_id| %>
 									<div id="feild-<%= feild_id %>-value-<%= value_id %>">
-										<%= value[:start].to_i %>&mdash;<%= value[:end].to_i %>: <%= value[:value] %> <br>
-										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-value" value="<%= value[:value] %>">
+										<%= value[:start].to_i %>&mdash;<%= value[:end].to_i %>: <%= safe_join value[:value].split(/(\@[^\@#:\/\\]*#[^\@#:\/\\]*\@)/).each.with_index.map { |str, i| if i.odd? then if Obj.exists?(id: str[1..-2].split('#')[1]) then sanitize link_to Obj.find(str[1..-2].split('#')[1]).name, obj_path(str[1..-2].split('#')[1]), :class => "link link-animated" else sanitize link_to "broken link", "#", :class => "link link-broken link-animated" end else str end } %><br>
+										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-value" value="<%= safe_join value[:value].split(/(\@[^\@#:\/\\]*#[^\@#:\/\\]*\@)/).each.with_index.map { |str, i| if i.odd? then if Obj.exists?(id: str[1..-2].split('#')[1]) then sanitize link_to Obj.find(str[1..-2].split('#')[1]).name, obj_path(str[1..-2].split('#')[1]), :class => "link link-animated" else sanitize link_to "broken link", "#", :class => "link link-broken link-animated" end else str end } %><br>">
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-start" value="<%= value[:start].to_i %>">
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-end" value="<%= value[:end].to_i %>">
 									</div>
 								<% end %>
 							</div>
+							<!--<br>
+							test_graph:
+							<hr>
+							<div style="display: flex; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; width: 100%;">
+								<% feild[:values].each_with_index do |value, value_id| %>
+									<div id="graph-feild-<%= feild_id %>-value-<%= value_id %>" class="" style="flex: 0 0 auto; margin-right: 3px;">
+										<%= value[:start].to_i %>
+										<%= safe_join value[:value].split(/(\@[^\@#:\/\\]*#[^\@#:\/\\]*\@)/).each.with_index.map { |str, i| if i.odd? then if Obj.exists?(id: str[1..-2].split('#')[1]) then sanitize link_to Obj.find(str[1..-2].split('#')[1]).name, obj_path(str[1..-2].split('#')[1]), :class => "link link-animated" else sanitize link_to "broken link", "#", :class => "link link-broken link-animated" end else str end } %>
+										<%= value[:end].to_i %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</div>
+								<% end %>
+							</div>-->
 						<% elsif feild[:type] == "link" %>
 							<%= feild[:name] %>:
 							<hr>
 							<div id="feild-<%= feild_id %>-values">
 								<% feild[:values].each_with_index do |value, value_id| %>
 									<div id="feild-<%= feild_id %>-value-<%= value_id %>">
-										<%= value[:start].to_i %>&mdash;<%= value[:end].to_i %>: <%= link_to Obj.find(value[:value]).name, obj_path(value[:value]), :class => "link" %> <br>
+										<%= value[:start].to_i %>&mdash;<%= value[:end].to_i %>: <%= link_to Obj.find(value[:value]).name, obj_path(value[:value]), :class => "link link-animated" %> <br>
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-value" value="<%= value[:value] %>">
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-start" value="<%= value[:start].to_i %>">
 										<input type="hidden" id="feild-<%= feild_id %>-value-<%= value_id %>-end" value="<%= value[:end].to_i %>">
@@ -41,12 +53,12 @@
 						<% if feild[:type] == "text" %>
 							<%= feild[:name] %>:
 							<hr>
-							<%= feild[:value] %><br>
+							<%= safe_join feild[:value].split(/(\@[^\@#:\/\\]*#[^\@#:\/\\]*\@)/).each.with_index.map { |str, i| if i.odd? then if Obj.exists?(id: str[1..-2].split('#')[1]) then sanitize link_to Obj.find(str[1..-2].split('#')[1]).name, obj_path(str[1..-2].split('#')[1]), :class => "link link-animated" else sanitize link_to "broken link", "#", :class => "link link-broken link-animated" end else str end } %><br>
 						<% elsif feild[:type] == "link" %>
 							<%= feild[:name] %>:
 							<hr>
 							<% if Obj.exists?(id: feild[:value].to_i) %>
-								<%= link_to Obj.find(feild[:value].to_i).name, obj_path(feild[:value].to_i), :class => "link" %> <br>
+								<%= link_to Obj.find(feild[:value].to_i).name, obj_path(feild[:value].to_i), :class => "link link-animated" %> <br>
 							<% else %>
 								broken-link <br>
 							<% end %>
@@ -64,12 +76,12 @@
 <br>
 <%= link_to "Back to objects index", objs_path, :class=>"btn btn-sm color-white" %>
 <% if logged_in? && (@obj.users.include? current_user or @obj.universe.users.include? current_user) then %>
-	<%= link_to "Edit object", edit_obj_path(@obj), :class=>"btn btn-sm color-white" %>
+	<%= link_to "Edit object", edit_obj_path(@obj), :class=>"btn btn-sm color-primary" %>
+	<%= link_to "Delete", obj_path(@obj), method: :delete, data: {confirm: "Are you sure you want to delete this object?"}, :class=>"btn btn-sm color-danger" %>
 <% end %>
 <hr>
 <h4>Object's users</h4>
 <% @obj.users.each do |user| %>
-	<%= user.id %>
-	<%= link_to user.username, user_path(user), :class=>"link" %>
+	<%= link_to user.username, user_path(user), :class=>"link link-animated" %>
 	<br>
 <% end %>

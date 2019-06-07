@@ -1,17 +1,32 @@
 <br>
-<% @objs.each do |obj| %>
-	<%= obj.id %>
-	<%= obj.name %>
-	<%= obj.obj_type %>
-	<%= link_to "View", obj_path(obj), :class=>"btn btn-xs color-success" %>
-	<% if obj.users.include? current_user or obj.universe.users.include? current_user then %>
-		<%= link_to "Edit", edit_obj_path(obj), :class=>"btn btn-xs color-primary" %>
-		<%= link_to "Delete", obj_path(obj), method: :delete, data: {confirm: "Are you sure you want to delete this object?"}, :class=>"btn btn-xs color-danger" %>
-	<% end %>
-	<br>
-	<br>
-<% end %>
+<table class="table table-striped table-hover">
+	<thead></thead>
+		<tr class="table-header">
+			<th>Name</th>
+			<th>Type</th>
+			<th>Universe</th>
+			<th>Owners</th>
+			<th>Created</th>
+			<th>Updated</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @objs.each do |obj| %>
+			<tr>
+				<td><%= link_to obj.name, obj_path(obj), :class=>"link link-animated" %></td>
+				<td><%= obj.obj_type %></td>
+				<td><%= link_to obj.universe.name, universe_path(obj.universe), :class=>"link link-animated" %></td>
+				<td><%= obj.users.map{ |user| link_to user.username, user_path(user), :class=>"link link-animated" }.to_sentence.html_safe %></td>
+				<td><%= time_ago_in_words(obj.created_at) %></td>
+				<td><%= time_ago_in_words(obj.updated_at) %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
 <hr>
 <% if logged_in? then %>
-	<%= link_to "New object", new_obj_path, :class=>"btn btn-sm color-white" %>
+	<%= link_to "New object", new_obj_path, :class=>"btn btn-sm color-primary" %>
+	<%= link_to "New Character", new_obj_path(:type => "Character"), :class=>"btn btn-sm color-primary" %>
+	<%= link_to "New Location", new_obj_path(:type => "Location"), :class=>"btn btn-sm color-primary" %>
+	<%= link_to "New Item", new_obj_path(:type => "Item"), :class=>"btn btn-sm color-primary" %>
 <% end %>

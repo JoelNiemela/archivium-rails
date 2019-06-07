@@ -4,8 +4,36 @@ class ObjsController < ApplicationController
 	before_action :require_same_user_or_universe, only: [:edit, :update, :destroy]
    
 	def new
+		data = []
+		type = params["type"]
+		case type
+			when "Character" then
+				data =
+				[
+					{:name=>"general", :data=>[
+						{:name=>"birth", :type=>"text", :value=>"", :timeframes=>false},
+						{:name=>"death", :type=>"text", :value=>"", :timeframes=>false}
+					]}
+				]
+			when "Location" then
+				data =
+				[
+					{:name=>"general", :data=>[
+						
+					]}
+				]
+			when "Item" then
+				data =
+				[
+					{:name=>"general", :data=>[
+						
+					]}
+				]
+			else
+				data = [{:name=>"general", :data=>data}]
+		end
 		@obj = Obj.new
-		@obj.data = [{:name=>"general", :data=>[]}]
+		@obj.data = data
 	end
 	
 	def create

@@ -24,10 +24,10 @@
 	<tbody>
 		<% @user.objs.each do |obj| %>
 			<tr>
-				<td><%= link_to obj.name, obj_path(obj), :class=>"link" %></td>
+				<td><%= link_to obj.name, obj_path(obj), :class=>"link link-animated" %></td>
 				<td><%= obj.obj_type %></td>
-				<td><%= link_to obj.universe.name, universe_path(obj.universe), :class=>"link" %></td>
-				<td><%= obj.users.map{ |user| link_to user.username, user_path(user), :class=>"link" }.to_sentence.html_safe %></td>
+				<td><%= link_to obj.universe.name, universe_path(obj.universe), :class=>"link link-animated" %></td>
+				<td><%= obj.users.map{ |user| link_to user.username, user_path(user), :class=>"link link-animated" }.to_sentence.html_safe %></td>
 				<td><%= time_ago_in_words(obj.created_at) %></td>
 				<td><%= time_ago_in_words(obj.updated_at) %></td>
 			</tr>
@@ -49,8 +49,8 @@
 	<tbody>
 		<% @user.universes.each do |universe| %>
 			<tr>
-				<td><%= link_to universe.name, universe_path(universe), :class=>"link" %></td>
-				<td><%= universe.users.map{ |user| link_to user.username, user_path(user), :class=>"link" }.to_sentence.html_safe %></td>
+				<td><%= link_to universe.name, universe_path(universe), :class=>"link link-animated" %></td>
+				<td><%= universe.users.map{ |user| link_to user.username, user_path(user), :class=>"link link-animated" }.to_sentence.html_safe %></td>
 				<td><%= time_ago_in_words(universe.created_at) %></td>
 				<td><%= time_ago_in_words(universe.updated_at) %></td>
 			</tr>

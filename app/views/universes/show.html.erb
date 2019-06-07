@@ -13,11 +13,11 @@
 <h4>Universe's users</h4>
 <% @universe.users.each do |user| %>
 	<%= user.id %>
-	<%= link_to user.username, user_path(user), :class=>"link" %>
+	<%= link_to user.username, user_path(user), :class=>"link link-animated" %>
 	<br>
 <% end %>
 <h4>Universe's objs</h4>
 <% @universe.objs.each do |obj| %>
-	<%= link_to obj.name, obj_path(obj), :class=>"link" %>
+	<%= link_to obj.name, obj_path(obj), :class=>"link link-animated" %>
 	<br>
 <% end %>

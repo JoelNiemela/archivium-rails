@@ -1,15 +1,24 @@
 <br>
-<% @universes.each do |universe| %>
-	<%= universe.id %>
-	<%= universe.name %>
-	<%= link_to "View", universe_path(universe), :class=>"btn btn-xs color-success" %>
-	<% if universe.users.include?(current_user) then %>
-		<%= link_to "Edit", edit_universe_path(universe), :class=>"btn btn-xs color-primary" %>
-		<%= link_to "Delete", universe_path(universe), method: :delete, data: {confirm: "Are you sure you want to delete this universe?"}, :class=>"btn btn-xs color-danger" %>
-	<% end %>
-	<br>
-	<br>
-<% end %>
+<table class="table table-striped table-hover">
+	<thead></thead>
+		<tr class="table-header">
+			<th>Name</th>
+			<th>Owners</th>
+			<th>Created</th>
+			<th>Updated</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @universes.each do |universe| %>
+			<tr>
+				<td><%= link_to universe.name, universe_path(universe), :class=>"link link-animated" %></td>
+				<td><%= universe.users.map{ |user| link_to user.username, user_path(user), :class=>"link link-animated" }.to_sentence.html_safe %></td>
+				<td><%= time_ago_in_words(universe.created_at) %></td>
+				<td><%= time_ago_in_words(universe.updated_at) %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
 <hr>
 <% if logged_in? then %>
 	<%= link_to "New universe", new_universe_path, :class=>"btn btn-sm color-white" %>

@@ -1,11 +1,19 @@
 <br>
-<% @users.each do |user| %>
-	<%= user.id %>
-	<%= user.username %>
-	<%= link_to "View", user_path(user), :class=>"btn btn-xs color-success" %>
-	<% if user == current_user then %>
-		<%= link_to "Edit", edit_user_path(user), :class=>"btn btn-xs color-primary" %>
-	<% end %>
-	<br>
-	<br>
-<% end %>
+<table class="table table-striped table-hover">
+	<thead></thead>
+		<tr class="table-header">
+			<th>Name</th>
+			<th>Created</th>
+			<th>Updated</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @users.each do |user| %>
+			<tr>
+				<td><%= link_to user.username, user_path(user), :class=>"link link-animated" %></td>
+				<td><%= time_ago_in_words(user.created_at) %></td>
+				<td><%= time_ago_in_words(user.updated_at) %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

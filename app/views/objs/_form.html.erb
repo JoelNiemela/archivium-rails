@@ -48,18 +48,18 @@
 					<div id="fields_divs[<%= tab_id %>]" class="feild-frame-container well">
 						<% tab_data[:data].each.with_index do |data, i| %>
 							<div id="data_feilds[<%= tab_id %>][<%= i %>]" class="feild-frame float-left">
-								<% if data[:timeframes] then %>
-									<div id="data_header_span[<%= tab_id %>][<%= i %>]">
-										<hr class="size-fullwidth"> <br>
-										<% if data[:type] == "text" then %>
-											<input id="feilds_type[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="text">
-										<% elsif data[:type] == "link" then %>
-											<input id="feilds_type[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="link">
-										<% end %>
-										<label>Name</label> <br>
-										<input id="feilds_name[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][name]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
-									</div>
-									<div id="time_frames[<%= tab_id %>][<%= i %>]">
+								<div id="data_header_span[<%= tab_id %>][<%= i %>]">
+									<hr class="size-fullwidth"> <br>
+									<% if data[:type] == "text" then %>
+										<input id="feilds_type[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="text">
+									<% elsif data[:type] == "link" then %>
+										<input id="feilds_type[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="link">
+									<% end %>
+									<label>Name</label> <br>
+									<input id="feilds_name[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][name]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
+								</div>
+								<div id="time_frames[<%= tab_id %>][<%= i %>]">
+									<% if data[:timeframes] then %>
 										<% data[:values].each_with_index do |value, time_frame_id| %>
 											<div id="time_frame[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" style="display: <%= time_frame_id==0 ? "block" : "none" %>">
 												<div id="time_frame_span[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]">
@@ -77,6 +77,20 @@
 												<% if data[:type] == "text" then %>
 													<label>Text</label> <br>
 													<textarea id="time_frame_value[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][frames][<%= time_frame_id %>][value]" class="textarea textarea-vertical size-fullwidth"><%= value[:value] %></textarea> <br>
+													<div id="text_area_markup_editor[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" style="display: none">
+												 		<%= submit_tag "Insert link", :class => "btn color-primary", :id => "insert_link_button[#{tab_id}][#{i}][#{time_frame_id}]", :type => "button", :onclick => "insertText('time_frame_value[#{tab_id}][#{i}][#{time_frame_id}]', document.getElementById('markup_editor_new_link[#{tab_id}][#{i}][#{time_frame_id}]').value)" %>
+												 		<select id="markup_editor_new_link[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" class="select size-narrow">
+															<% if universes.length > 0 then %>
+																<% universes_objs[(@obj.universe ? @obj.universe.id : universes[0][1])].each do |universe_obj| %>
+																	<option value="@<%= universe_obj[0] %>#<%= universe_obj[1] %>@"><%= universe_obj[0] %></option>
+																<% end %>
+															<% else %>
+																<option disabled value="0">Please create a universe before creating objects</option>
+															<% end %>
+														</select> <br>
+													</div>
+													<label>Show markup editor</label> <br>
+													<input type="checkbox" onclick="toggleElementDisplay('text_area_markup_editor[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]');">
 												<% elsif data[:type] == "link" then %>
 													<label>Link</label> <br>
 													<select id="time_frame_value[<%= tab_id %>][<%= i %>][<%= time_frame_id %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][frames][<%= time_frame_id %>][value]" class="select size-fullwidth">
@@ -95,28 +109,7 @@
 												<% end %>
 											</div>
 										<% end %>
-									</div>
-									<div id="data_footer_span[<%= tab_id %>][<%= i %>]">
-										<label>Enable time frames</label> <br>
-										<%= hidden_field_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "off", :id => "time_frames_default[#{tab_id}][#{i}]" %>
-										<%= check_box_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "on", data[:timeframes], :id => "toggle_time_frames_checkbox[#{tab_id}][#{i}]", :onclick => "toggleTimeFrames(#{tab_id}, #{i}, this.checked);" %>
-										<br>
-										<%= submit_tag "🠰 Move feild", :class => "btn btn-sm color-white", :id => "move_left_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "moveFeildLeft(#{tab_id}, #{i})" %>
-										<%= submit_tag "Delete feild", :class => "btn btn-sm color-danger", :id => "delete_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "deleteFeild(#{tab_id}, #{i})" %>
-										<%= submit_tag "Move feild 🠲", :class => "btn btn-sm color-white", :id => "move_right_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "moveFeildRight(#{tab_id}, #{i})" %>
-									</div>
-								<% else %>
-									<div id="data_header_span[<%= tab_id %>][<%= i %>]">
-										<hr class="size-fullwidth"> <br>
-										<% if data[:type] == "text" then %>
-											<input id="feilds_type[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="text">
-										<% elsif data[:type] == "link" then %>
-											<input id="feilds_type[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][type]" type="hidden" value="link">
-										<% end %>
-										<label>Name</label> <br>
-										<input id="feilds_name[<%= tab_id %>][<%= i %>]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][name]" class="input size-fullwidth" value="<%= data[:name] %>"> <br>
-									</div>
-									<div id="time_frames[<%= tab_id %>][<%= i %>]">
+									<% else %>
 										<div id="time_frame[<%= tab_id %>][<%= i %>][0]" style="display: block">
 											<div id="time_frame_span[<%= tab_id %>][<%= i %>][0]" style="display: none">
 												<%= submit_tag 'Previous Timeframe', :class => "btn size-halfwidth float-left", :id => "previous_time_frame_button[#{tab_id}][#{i}][0]", :type => 'button', :onclick => "previousTimeFrame(#{tab_id}, #{i}, 0);" %> <%= submit_tag 'Next Timeframe', :class => "btn size-halfwidth float-left", :type => 'button', :id => "next_time_frame_button[#{tab_id}][#{i}][0]", :onclick => "nextTimeFrame(#{tab_id}, #{i}, 0);" %> <br>
@@ -133,6 +126,20 @@
 											<% if data[:type] == "text" then %>
 												<label>Text</label> <br>
 												<textarea id="time_frame_value[<%= tab_id %>][<%= i %>][0]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][value]" class="textarea textarea-vertical size-fullwidth"><%= data[:value] %></textarea> <br>
+												<div id="text_area_markup_editor[<%= tab_id %>][<%= i %>][0]" style="display: none">
+											 		<%= submit_tag "Insert link", :class => "btn color-primary", :id => "insert_link_button[#{tab_id}][#{i}][0]", :type => "button", :onclick => "insertText('time_frame_value[#{tab_id}][#{i}][0]', document.getElementById('markup_editor_new_link[#{tab_id}][#{i}][0]').value)" %>
+											 		<select id="markup_editor_new_link[<%= tab_id %>][<%= i %>][0]" class="select size-narrow">
+														<% if universes.length > 0 then %>
+															<% universes_objs[(@obj.universe ? @obj.universe.id : universes[0][1])].each do |universe_obj| %>
+																<option value="@<%= universe_obj[0] %>#<%= universe_obj[1] %>@"><%= universe_obj[0] %></option>
+															<% end %>
+														<% else %>
+															<option disabled value="0">Please create a universe before creating objects</option>
+														<% end %>
+													</select> <br>
+												</div>
+												<label>Show markup editor</label> <br>
+												<input type="checkbox" onclick="toggleElementDisplay('text_area_markup_editor[<%= tab_id %>][<%= i %>][0]');">
 											<% elsif data[:type] == "link" then %>
 												<label>Link</label> <br>
 												<select id="time_frame_value[<%= tab_id %>][<%= i %>][0]" name="obj[tabs][<%= tab_id %>][feilds][<%= i %>][value]" class="select size-fullwidth">
@@ -150,17 +157,17 @@
 												</select> <br>
 											<% end %>
 										</div>
-									</div>
-									<div id="data_footer_span[<%= tab_id %>][<%= i %>]">
-										<label>Enable time frames</label> <br>
-										<%= hidden_field_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "off", :id => "time_frames_default[#{tab_id}][#{i}]" %>
-										<%= check_box_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "on", data[:timeframes], :id => "toggle_time_frames_checkbox[#{tab_id}][#{i}]", :onclick => "toggleTimeFrames(#{tab_id}, #{i}, this.checked);" %>
-										<br>
-										<%= submit_tag "🠰 Move feild", :class => "btn btn-sm color-white", :id => "move_left_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "moveFeildLeft(#{tab_id}, #{i})" %>
-										<%= submit_tag "Delete feild", :class => "btn btn-sm color-danger", :id => "delete_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "deleteFeild(#{tab_id}, #{i})" %>
-										<%= submit_tag "Move feild 🠲", :class => "btn btn-sm color-white", :id => "move_right_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "moveFeildRight(#{tab_id}, #{i})" %>
-									</div>
-								<% end %>
+									<% end %>
+								</div>
+								<div id="data_footer_span[<%= tab_id %>][<%= i %>]">
+									<label>Enable time frames</label> <br>
+									<%= hidden_field_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "off", :id => "time_frames_default[#{tab_id}][#{i}]" %>
+									<%= check_box_tag "obj[tabs][#{tab_id}][feilds][#{i}][time]", "on", data[:timeframes], :id => "toggle_time_frames_checkbox[#{tab_id}][#{i}]", :onclick => "toggleTimeFrames(#{tab_id}, #{i}, this.checked);" %>
+									<br>
+									<%= submit_tag "🠰 Move feild", :class => "btn btn-sm color-white", :id => "move_left_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "moveFeildLeft(#{tab_id}, #{i})" %>
+									<%= submit_tag "Delete feild", :class => "btn btn-sm color-danger", :id => "delete_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "deleteFeild(#{tab_id}, #{i})" %>
+									<%= submit_tag "Move feild 🠲", :class => "btn btn-sm color-white", :id => "move_right_data_feild_button[#{tab_id}][#{i}]", :type => "button", :onclick => "moveFeildRight(#{tab_id}, #{i})" %>
+								</div>
 							</div>
 						<% end %>
 						<div class="feild-frame float-left"></div>
