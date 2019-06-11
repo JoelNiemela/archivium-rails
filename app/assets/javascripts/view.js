@@ -336,7 +336,7 @@ function addFieldToForm(type) {
     "</div>";
     
     var time_frame_span =
-    "<div id=\"time_frame_span[" + tab_id + "][" + i + "][" + time_frame_id + "]\">" +
+    "<div id=\"time_frame_span[" + tab_id + "][" + i + "][" + time_frame_id + "]\" style=\"display: none\">" +
         "<input type=\"button\" name=\"commit\" value=\"Previous Timeframe\" class=\"btn size-halfwidth float-left\" id=\"previous_time_frame_button[" + tab_id + "][" + i + "][" + time_frame_id + "]\" onclick=\"previousTimeFrame(" + tab_id + ", " + i + ", " + time_frame_id + ");\" data-disable-with=\"Previous Timeframe\"> <input type=\"button\" name=\"commit\" value=\"Next Timeframe\" class=\"btn size-halfwidth float-left\" id=\"next_time_frame_button[" + tab_id + "][" + i + "][" + time_frame_id + "]\" onclick=\"nextTimeFrame(" + tab_id + ", " + i + ", " + time_frame_id + ");\" data-disable-with=\"Next Timeframe\"> <br>" +
         "<input type=\"button\" name=\"commit\" value=\"Add Timeframe\" class=\"btn size-fullwidth float-left\" id=\"add_time_frame_button[" + tab_id + "][" + i + "][" + time_frame_id + "]\" onclick=\"addTimeFrame(" + tab_id + ", " + i + ", " + time_frame_id + ", 'text');\" data-disable-with=\"Add Timeframe\"> <br>" +
         "<span id=\"time_frame_number[" + tab_id + "][" + i + "][" + time_frame_id + "]\">Timeframe 1:</span><br>" +
@@ -407,7 +407,8 @@ function addFieldToForm(type) {
     range.selectNode(document.getElementById("tabs[" + tab_id + "]"));
     var documentFragment = range.createContextualFragment(tagString);
     var fields_divs = document.getElementById("fields_divs[" + tab_id + "]");
-    fields_divs.insertBefore(documentFragment, fields_divs.childNodes[i+3]);
+    console.log(fields_divs.children[i]);
+    fields_divs.insertBefore(documentFragment, fields_divs.children[i]);
 }
 
 function getSelectOptions(hash) {
